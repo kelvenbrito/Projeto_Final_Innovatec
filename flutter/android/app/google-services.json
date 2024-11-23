@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612233225640",
+    "project_id": "projeto-flutter-3a7d0",
+    "storage_bucket": "projeto-flutter-3a7d0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612233225640:android:4fa736b6137bb9c810699d",
+        "android_client_info": {
+          "package_name": "com.kelven.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9tlGWYAru7WBEEKesCtc7ymvkLw0VN_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
