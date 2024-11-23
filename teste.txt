@@ -1,1 +1,6 @@
+<<<<<<< Updated upstream
 arquivo de teste 
+=======
+arquivo de teste 1133333
+teste
+>>>>>>> Stashed changes
