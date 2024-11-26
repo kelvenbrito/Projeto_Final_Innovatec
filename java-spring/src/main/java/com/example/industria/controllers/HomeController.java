@@ -27,6 +27,8 @@ public class HomeController {
         return "index";  // Nome do arquivo dentro de templates, sem a extensão .html
     }
 
+    
+
     // Página de criação de tarefa
     @GetMapping("/tarefas/nova")
     public String novaTarefa(Model model) {

@@ -4,17 +4,36 @@
     <title>Innovatech</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
-<body>          
-<div>
-<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
-</div>
-<div class="barra-intermediaria"></div>
+<body>
+   
+        
+<h1>Innovatech - Estoque</h1>
+<div th:insert="~{fragmentos/header :: header.html}"><!-- barra de menu --></div>
 
-<main class="main-content">
-    <div class="login-container">        
-        <button class="login-btn">Login</button>
-    </div>
-</main>
+
+<table>
+    <tr>
+        <th>Descrição</th>
+        <th>Setor</th>
+        <th>Prioridade</th>
+        <th>Status</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="tarefa : ${tarefas}">
+        <td th:text="${tarefa.descricao}">Descrição</td>
+        <td th:text="${tarefa.setor}">Setor</td>
+        <td th:text="${tarefa.prioridade}">Prioridade</td>
+        <td th:text="${tarefa.status}">Status</td>
+        <td th:text="${tarefa.usuario != null ? tarefa.usuario.nome : 'Usuário Não Definido'}">Usuário</td>
+        <td>
+            <!-- Link para editar a tarefa -->
+            <a th:href="@{'/tarefas/editar/' + ${tarefa.id}}">Editar</a>
+            <!-- Link para excluir a tarefa -->
+            <a th:href="@{'/tarefas/excluir/' + ${tarefa.id}}">Excluir</a>
+        </td>
+    </tr>
+</table>
 
 <div class="barra-intermediaria"></div>
 
