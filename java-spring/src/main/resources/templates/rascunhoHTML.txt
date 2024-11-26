@@ -4,13 +4,10 @@
     <title>Innovatech</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
-<body>
-   
-        
-<h1>Innovatech - Estoque</h1>
-<div th:insert="~{fragmentos/header :: header.html}"><!-- barra de menu --></div>
+<body>          
 
-<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div><!-- barra de menu --></div>
+<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
+
 
 <table>
     <tr>
@@ -39,31 +36,6 @@
 <!-- Links para navegação -->
 <a href="/tarefas/nova">Cadastrar Nova Tarefa</a>
 <a href="/usuarios/novo">Cadastrar Novo Usuário</a>
-
-<footer><h5> uma aplicação de QRStock</h5></footer>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Innovatech</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
-</head>
-<body>          
-<div>
-<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
-</div>
-<div class="barra-intermediaria"></div>
-
-<main class="main-content">
-    <div class="login-container">        
-        <button class="login-btn">Login</button>
-    </div>
-</main>
-
-<div class="barra-intermediaria"></div>
 
 <footer><h5> uma aplicação de QRStock</h5></footer>
 
