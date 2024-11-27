@@ -2,43 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Innovatech</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
-<body>
-   
-        
-<h1>Innovatech - Estoque</h1>
+<body>          
 
-<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div><!-- barra de menu --></div>
+<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
+  
+<div class="barra-intermediaria"></div>
 
-<table>
-    <tr>
-        <th>Descrição</th>
-        <th>Setor</th>
-        <th>Prioridade</th>
-        <th>Status</th>
-        <th>Usuário</th>
-        <th>Ações</th>
-    </tr>
-    <tr th:each="tarefa : ${tarefas}">
-        <td th:text="${tarefa.descricao}">Descrição</td>
-        <td th:text="${tarefa.setor}">Setor</td>
-        <td th:text="${tarefa.prioridade}">Prioridade</td>
-        <td th:text="${tarefa.status}">Status</td>
-        <td th:text="${tarefa.usuario != null ? tarefa.usuario.nome : 'Usuário Não Definido'}">Usuário</td>
-        <td>
-            <!-- Link para editar a tarefa -->
-            <a th:href="@{'/tarefas/editar/' + ${tarefa.id}}">Editar</a>
-            <!-- Link para excluir a tarefa -->
-            <a th:href="@{'/tarefas/excluir/' + ${tarefa.id}}">Excluir</a>
-        </td>
-    </tr>
-</table>
+<main class="main-content">
+    <div class="login-container">        
+        <button class="login-btn">
+            <a th:href="@{/login}" class="link-no-style">Login</a>
+        </button>
+    </div>
+</main>
 
-<!-- Links para navegação -->
-<a href="/tarefas/nova">Cadastrar Nova Tarefa</a>
-<a href="/usuarios/novo">Cadastrar Novo Usuário</a>
-
-<footer><h5> uma aplicação de QRStock</h5></footer>
+<div th:insert="~{fragmentos/footer :: footer}"><!-- barra de menu --></div>
 
 </body>
 </html>
