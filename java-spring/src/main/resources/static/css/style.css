@@ -27,12 +27,13 @@ header {
 /* Footer */
 footer {
     background-color: black;
-    height: 40px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
 }
+
 
 /* Barra intermediária antes e depois do conteúdo */
 .barra-intermediaria {
@@ -163,13 +164,5 @@ header {
     background-color: darkgray;
 }
 
-/* Footer */
-footer {
-    background-color: black;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
+
 
