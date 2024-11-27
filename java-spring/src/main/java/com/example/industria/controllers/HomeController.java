@@ -50,10 +50,16 @@ public class HomeController {
             return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("erro", "Ocorreu um erro ao salvar a tarefa.");
-            List<Usuario> usuarios = usuarioService.listarUsuarios();
-            model.addAttribute("usuarios", usuarios);
-            model.addAttribute("tarefa", tarefa);
-            return "tarefas-nova";
+            List<Usuario> usuarios = usuarioService.listarUsuarios();  // Buscar usuários novamente
+            model.addAttribute("usuarios", usuarios);  // Passar lista de usuários para a view
+            model.addAttribute("tarefa", tarefa);  // Passar a tarefa atual
+            return "tarefas-nova";  // Retorna para o formulário de criação de tarefa com mensagem de erro
         }
+    }
+
+
+    @GetMapping("/usuarios/novo")
+    public String about() {
+        return "cadastrar-usuario"; // Nome do arquivo HTML para outra página
     }
 }
