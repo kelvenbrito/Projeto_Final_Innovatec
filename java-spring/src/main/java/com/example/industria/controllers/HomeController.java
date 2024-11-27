@@ -56,4 +56,10 @@ public class HomeController {
             return "tarefas-nova";  // Retorna para o formulário de criação de tarefa com mensagem de erro
         }
     }
+
+
+    @GetMapping("/usuarios/novo")
+    public String about() {
+        return "cadastrar-usuario"; // Nome do arquivo HTML para outra página
+    }
 }
