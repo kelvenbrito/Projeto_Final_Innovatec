@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Innovatech</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>          
+
+<div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
+  
+<div class="barra-intermediaria"></div>
+
+<main class="main-content">
+    <div class="login-container">        
+        <button class="login-btn">
+            <a th:href="@{/login}" class="link-no-style">Login</a>
+        </button>
+    </div>
+</main>
+
+<div th:insert="~{fragmentos/footer :: footer}"><!-- barra de menu --></div>
+
+</body>
+</html>

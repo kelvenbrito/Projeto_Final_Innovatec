@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interno Almoxarifado</title>
+</head>
+<body><div th:if="${msg}" th:class="${'alert ' + classe + verde}" style="color: green;">
+    <span th:text="${msg}"></span>
+    
+    <div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>    
+    </div>
+</body>
+</html>
