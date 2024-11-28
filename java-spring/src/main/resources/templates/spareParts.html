@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{css/style.css}">
+<head>
+    <title>Peças da Máquina</title>
+</head>
+<body>
+    <h1>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h1>
+    <ul>
+        <li th:each="sparePart : ${spareParts}" th:text="${sparePart.nome}"></li>
+    </ul>
+    <a href="/machines">Voltar para Máquinas</a>
+</body>
+</html>
