@@ -1,7 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TodolistScreen extends StatefulWidget {
   final User user;
@@ -14,7 +17,7 @@ class TodolistScreen extends StatefulWidget {
 class _TodolistScreenState extends State<TodolistScreen> {
   final AuthService _service = AuthService();
 
-  String _scannedData = "Nenhum QR Code escaneado"; // Dados escaneados
+  final String _scannedData = "Nenhum QR Code escaneado"; // Dados escaneados
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +45,14 @@ class _TodolistScreenState extends State<TodolistScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => QRScannerScreen(
-                      onScan: (data) {
-                        setState(() {
-                          _scannedData = data;
-                        });
-                        Navigator.pop(context);
+                      onScan: (data)async {
+                        if (await canLaunch(data)) {
+                          await launch(data);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Não foi possível abrir: $data')),
+                          );
+                        }
                       },
                     ),
                   ),
@@ -54,16 +60,19 @@ class _TodolistScreenState extends State<TodolistScreen> {
               },
               icon: const Icon(Icons.qr_code, size: 36), // Ícone maior
               label: const Text(
-                'Escanear QR Code',
-                style: TextStyle(fontSize: 18), // Texto maior
-              ),
+                'Escanear QR Code'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 textStyle: const TextStyle(fontSize: 20),
               ),
+             
             ),
-            const SizedBox(height: 40),
-         
+            const SizedBox(height: 20),
+            Text(
+              _scannedData,
+              style: const TextStyle(fontSize: 18),
+              textAlign: TextAlign.center
+            ),
           ],
         ),
       ),
@@ -89,6 +98,7 @@ class QRScannerScreen extends StatelessWidget {
           for (final barcode in barcodes) {
             if (barcode.rawValue != null) {
               onScan(barcode.rawValue!);
+                Navigator.pop(context); // Volta para a tela anterior.
               break;
             }
           }

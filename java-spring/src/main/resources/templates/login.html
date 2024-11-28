@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,6 +6,22 @@
     <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
 <body>
+    <h1>Login</h1>
+
+    <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="Email" required><br><br>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" th:field="*{senha}" placeholder="Senha" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <a href="/">Voltar para a página inicial</a>
+</body>
+</html>
     <div class="login-container">
         <h1>Login</h1>
         <form th:action="@{/login}" method="post">
