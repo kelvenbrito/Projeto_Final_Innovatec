@@ -26,6 +26,21 @@ public class HomeController {
     public String home() {
         return "index";
     }
+    
+    // rota pagina interna almoxarifado
+     @GetMapping("/almoxarifado")
+    public String exibirPaginaAlmoxarifado() {
+        return "interna/interna-almoxarifado"; // Nome do arquivo HTML na pasta templates
+    }
+
+    // rota pagina interna manutencao
+    @GetMapping("/manutencao")
+    public String exibirPaginaManutencao() {
+        return "interna/interna-manutencao"; // Nome do arquivo HTML na pasta templates
+    }
+
+
+    
 
     // Página de criação de tarefa
     @GetMapping("/tarefas/nova")
