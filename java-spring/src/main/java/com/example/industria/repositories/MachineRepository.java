@@ -9,7 +9,7 @@ import com.example.industria.models.Machine;
 
 @Repository
 public interface MachineRepository extends JpaRepository<Machine, Long> {
+    
+    
 
-    Optional<Machine> findById(Long id);
 }
-

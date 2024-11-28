@@ -14,39 +14,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+
 public class Machine {
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<SparePart> getSpareParts() {
-        return spareParts;
-    }
-
-    public void setSpareParts(List<SparePart> spareParts) {
-        this.spareParts = spareParts;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Geração automática do ID
     private Long id;
@@ -58,4 +27,5 @@ public class Machine {
 
     // Getters e Setters
 }
+    
 
