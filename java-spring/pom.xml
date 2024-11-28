@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version> <!-- Versão compatível com o Spring Boot 3.x -->
+        <version>3.3.5</version> <!-- Confirme se essa versão é compatível com suas dependências -->
         <relativePath/>
     </parent>
 
@@ -23,11 +23,16 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-admin</artifactId>
-            <version>9.4.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+
+    	<dependency>
+    		<groupId>org.thymeleaf</groupId>
+    		<artifactId>thymeleaf</artifactId>
+    		<version>3.1.2.RELEASE</version>
+    	</dependency>
 
         <!-- Spring Boot Web, Thymeleaf, JPA e PostgreSQL -->
         <dependency>
