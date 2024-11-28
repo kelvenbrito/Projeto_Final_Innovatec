@@ -4,16 +4,22 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Machine {
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,7 +48,8 @@ public class Machine {
     }
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Geração automática do ID
+    private Long id;
     private String name;
     private String description;
 
