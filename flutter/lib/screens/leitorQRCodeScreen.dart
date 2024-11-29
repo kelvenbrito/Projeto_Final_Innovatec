@@ -8,7 +8,7 @@ class ScannerPage extends StatefulWidget {
 }
 
 class _ScannerPageState extends State<ScannerPage> {
-  // Instanciando o controlador
+  // Instanciando o controlador da câmera
   MobileScannerController cameraController = MobileScannerController();
   
   String? scannedCode; // Variável para armazenar o código escaneado
@@ -34,6 +34,13 @@ class _ScannerPageState extends State<ScannerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Scanner QR Code'),
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Volta para a tela anterior
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -46,22 +53,29 @@ class _ScannerPageState extends State<ScannerPage> {
                 setState(() {
                   scannedCode = code; // Atualiza o estado com o código escaneado
                 });
-                // Você pode adicionar lógica aqui para processar o código escaneado
+                // Lógica adicional pode ser adicionada aqui para processar o código escaneado
               }
             },
           ),
+          
+          // Botão de flash
           Positioned(
             top: 20,
-            left: 20,
-            child: ElevatedButton(
+            right: 20,
+            child: IconButton(
+              icon: Icon(
+                cameraController.isTorchOn ? Icons.flash_off : Icons.flash_on,
+                color: Colors.white,
+                size: 30,
+              ),
               onPressed: () {
                 // Alternar o flash (se disponível)
                 cameraController.toggleTorch();
               },
-              child: Text('Flash'),
             ),
           ),
-          // Exibe o código escaneado na tela
+          
+          // Exibe o código escaneado na tela, caso exista
           if (scannedCode != null)
             Positioned(
               bottom: 50,
@@ -69,9 +83,12 @@ class _ScannerPageState extends State<ScannerPage> {
               right: 20,
               child: Container(
                 padding: EdgeInsets.all(16.0),
-                color: Colors.black.withOpacity(0.6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Text(
-                  'Código detectado : $scannedCode',
+                  'Código detectado: $scannedCode',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
@@ -81,4 +98,8 @@ class _ScannerPageState extends State<ScannerPage> {
       ),
     );
   }
+}
+
+extension on MobileScannerController {
+  get isTorchOn => null;
 }

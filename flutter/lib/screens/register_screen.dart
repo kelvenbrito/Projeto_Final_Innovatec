@@ -18,18 +18,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Registrar Conta'),
+        backgroundColor: Colors.black, // Cor do app bar
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16.0), // Aumenta o padding para melhor disposição dos itens
         child: Center(
           child: Form(
             key: _formKey, // Associa a chave global ao formulário
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // Campo de Email
                 TextFormField(
                   controller: _emailController, // Associa o controlador ao campo de email
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'E-mail',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
                   validator: (value) {
                     if (value!.trim().isEmpty) {
@@ -38,10 +52,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 20),
+                // Campo de Senha
                 TextFormField(
                   controller: _passwordController, // Associa o controlador ao campo de senha
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Senha',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
                   validator: (value) {
                     if (value!.trim().isEmpty) {
@@ -53,10 +78,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                   obscureText: true, // Oculta o texto da senha
                 ),
+                const SizedBox(height: 20),
+                // Campo de Confirmar Senha
                 TextFormField(
                   controller: _confirmedPasswordController, // Associa o controlador ao campo de confirmação de senha
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Confirmar Senha',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
                   validator: (value) {
                     if (value!.trim().isEmpty) {
@@ -69,9 +105,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true, // Oculta o texto da confirmação de senha
                 ),
                 const SizedBox(height: 20),
+                // Botão de Registro
                 ElevatedButton(
-                  onPressed: () => _registrarUser(context), // Chama o método para registrar o usuário ao pressionar o botão
+                  onPressed: () => _registrarUser(context), // Chama o método para registrar o usuário
                   child: const Text('Registrar'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black, backgroundColor: Colors.grey, // Cor do texto preto
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    textStyle: const TextStyle(fontSize: 20),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  ),
                 ),
               ],
             ),
