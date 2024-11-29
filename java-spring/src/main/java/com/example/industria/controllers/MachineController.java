@@ -29,7 +29,7 @@ public class MachineController {
     public String listarMachines(Model model) {
         List<Machine> machines = machineRepository.findAll();
         model.addAttribute("machines", machines);
-        return "machines"; // Retorna para o template 'machines.html'
+        return "/interna/interna-manutencao"; // Retorna para o template
     }
 
     @GetMapping("/{id}")

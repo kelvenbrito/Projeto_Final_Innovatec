@@ -1,28 +1,36 @@
 package com.example.industria.controllers;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.example.industria.models.Usuario;
 import com.example.industria.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @PostMapping
-    public Usuario cadastrarUsuario(@RequestBody Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioController(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
-    @GetMapping
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
-    }
+    // Método de login
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String username, 
+                        @RequestParam("password") String password, 
+                        Model model) {
+        Usuario usuario = usuarioRepository.findByEmail(username);
 
-    
+        if (usuario != null && usuario.getSenha().equals(password)) {
+            return "redirect:/home";  // Login bem-sucedido, redireciona para a home
+        } else {
+            model.addAttribute("error", "Usuário ou senha incorretos!");
+            return "login";  // Retorna para a página de login com erro
+        }
+    }
 }

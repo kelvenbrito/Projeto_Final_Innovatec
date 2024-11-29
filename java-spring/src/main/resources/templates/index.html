@@ -10,12 +10,14 @@
   
 <div class="barra-intermediaria"></div>
 
-<main class="main-content">
-    <div class="login-container">        
-        <button class="login-btn">
-            <a th:href="@{/login}" class="link-no-style">Login</a>
-        </button>
-    </div>
+<main class="main-content">       
+                 <a th:href="@{/login}" class="link-no-style">
+                <button class="login-btn">
+                Login
+            </button>
+            </a>
+        
+    
 </main>
 
 <div th:insert="~{fragmentos/footer :: footer}"><!-- barra de menu --></div>

@@ -5,49 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interno Manutenção</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
     <!-- Cabeçalho -->
-    <div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
+    <header th:insert="~{fragmentos/header :: header}">Interno Manutenção</header>
 
     <main class="main-content">
         <div class="container">
             <h2>Página Interna - Manutenção</h2>
 
-            <!-- Mensagem de alerta, se houver -->
+            <!-- Mensagem de alerta -->
             <div th:if="${msg}" th:classappend="'alert ' + classe" style="color: green;">
                 <span th:text="${msg}"></span>
             </div>
 
-            <!-- Lista de Máquinas -->
-            <div class="machine-list-container">
-                <h3>Lista de Máquinas</h3>
-
-                <table class="machine-table">
-                    <thead>
-                        <tr>
-                            <th>Nome da Máquina</th>
-                            <th>Descrição</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Iterar sobre a lista de máquinas -->
-                        <tr th:each="maquina : ${maquinas}">
-                            <td th:text="${maquina.nome}"></td>
-                            <td th:text="${maquina.descricao}"></td>
-                            <td>
-                                <!-- Botão para abrir a máquina e ver os componentes -->
-                                <a th:href="@{/manutencao/maquina/{id}(id=${maquina.id})}" class="view-components-btn">Visualizar Componentes</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Lista de Máquinas com Estilo Card -->
+            <h3>Lista de Máquinas</h3>
+            <div th:each="machine : ${machines}" class="machine-card">
+                <div class="machine-details">
+                    <div class="machine-name" th:text="${machine.name}"></div>
+                    <div class="machine-description" th:text="${machine.description}"></div>
+                </div>
+                <a th:href="@{/machines/{id}(id=${machine.id})}" class="view-components-btn">Visualizar Componentes</a>
             </div>
         </div>
     </main>
 
     <!-- Rodapé -->
-    <div th:insert="~{fragmentos/footer :: footer}"><!-- barra de rodapé --></div>
+    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Interno Manutenção</footer>
 </body>
 </html>
