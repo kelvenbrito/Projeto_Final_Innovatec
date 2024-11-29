@@ -1,15 +1,48 @@
-<div th:if="${loginError}" class="error-message">
-    <p th:text="${loginError}" style="color:red;"></p>
-</div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Innovatech</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
 
-<form class="login-form" th:action="@{/login}" method="post">
-    <div class="form-group">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" placeholder="Digite seu usuário" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-    </div>
-    <button type="submit" class="login-btn">Entrar</button>
-</form>
+    <!-- Header -->
+    <div th:insert="~{fragmentos/header :: header}"></div>
+
+    <!-- Barra intermediária -->
+    <div class="barra-intermediaria"></div>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <div class="login-container">
+            <h1>Login</h1>
+
+            <!-- Exibição de mensagem de erro, se existir -->
+            <div th:if="${loginError}" class="error-message">
+                <p th:text="${loginError}" style="color:red;"></p>
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="text" id="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+                <button type="submit" class="login-btn">Entrar</button>
+            </form>
+            
+            <br>           
+            <button class="home-btn">
+                <a th:href="@{/}" class="link-no-style">Voltar</a>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div th:insert="~{fragmentos/footer :: footer}"></div>
+
+</body>
+</html>

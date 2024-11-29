@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 
 import com.example.industria.models.Machine;
+import com.example.industria.models.SparePart;
 import com.example.industria.repositories.MachineRepository;
 import com.example.industria.repositories.SparePartRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/machines")
@@ -21,7 +21,7 @@ public class MachineController {
     private final SparePartRepository sparePartRepository;
 
     public MachineController(MachineRepository machineRepository, SparePartRepository sparePartRepository) {
-        this.machineRepository = machineRepository;
+        this.machineRepository = machineRepository; 
         this.sparePartRepository = sparePartRepository;
     }
 
@@ -29,15 +29,24 @@ public class MachineController {
     public String listarMachines(Model model) {
         List<Machine> machines = machineRepository.findAll();
         model.addAttribute("machines", machines);
-        return "/interna/interna-manutencao"; // Retorna para o template
+        return "interna/interna-manutencao"; // Retorna para o template
     }
 
     @GetMapping("/{id}")
     public String listarSparePart(@PathVariable Long id, Model model) {
-        Machine machine = machineRepository.findById(id).orElseThrow(() -> new RuntimeException("Máquina não encontrada!"));
-        Optional<Machine> spareParts = sparePartRepository.findByMachineId(id);
+        // Recuperando a máquina com o ID
+        Machine machine = machineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Máquina não encontrada!"));
+
+        // Recuperando a peça de reposição associada à máquina
+        List<SparePart> spareParts = sparePartRepository.findByMachineId(id); // Deve ser uma lista
+
+        // Adicionando atributos ao modelo
         model.addAttribute("machine", machine);
-        model.addAttribute("spareParts", spareParts);
-        return "spareParts"; // Retorna para o template 'spareParts.html'
+        model.addAttribute("spareParts", spareParts); // Usando spareParts no plural aqui
+
+        // Retornando para o template 'spareParts.html'
+        return "interna/spareParts";  // Especificando o caminho dentro da pasta 'interna'
+
     }
 }

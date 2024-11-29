@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{css/style.css}">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peças da Máquina</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h1>
-    <ul>
-        <li th:each="sparePart : ${spareParts}" th:text="${sparePart.nome}"></li>
-    </ul>
-    <a href="/machines">Voltar para Máquinas</a>
+    <!-- Cabeçalho -->
+    <header th:insert="~{fragmentos/header :: header}">Peças de Reposição</header>
+
+    <main class="main-content">
+        <div class="container">
+            <h2>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h2>
+
+            <!-- Lista de Peças com Estilo Card -->
+            <h3>Lista de Peças de Reposição</h3>
+            <div th:each="sparePart : ${spareParts}" class="spare-part-card">
+                <div class="spare-part-details">
+                    <div class="spare-part-name" th:text="${sparePart.name}"></div>
+                    <div class="spare-part-description" th:text="${sparePart.description}"></div>
+                    <div class="spare-part-quantity" th:text="'Quantidade disponível: ' + ${sparePart.quantityAvailable}"></div>
+                </div>
+                <a th:href="@{/spareParts/{id}(id=${sparePart.id})}" class="view-details-btn">Ver Detalhes</a>
+            </div>
+
+            <!-- Botão Voltar -->
+            <a href="/machines" class="back-btn">Voltar para Máquinas</a>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Peças de Reposição</footer>
 </body>
 </html>
