@@ -33,11 +33,11 @@ footer {
     color: white;
 }
 
-/* Barra intermediária */
+/* Barra intermediária 
 .barra-intermediaria {
     background-color: black;
     height: 20px;
-}
+} */
 
 /* Corpo principal (main) */
 .main-content {
@@ -49,7 +49,7 @@ footer {
 }
 
 /* Contêiner de login */
-.login-container {
+.login-container, .interna-manutencao-container {
     text-align: center;
     background-color: white;
     padding: 30px;
@@ -227,4 +227,13 @@ h3 {
 p {
     font-size: 1rem;
     color: #555;
+}
+
+.logo {
+    margin-top: 1px;
+    margin-right: 2px;
+    width: 35px;
+    border-radius: 5px;
+
+    
 }

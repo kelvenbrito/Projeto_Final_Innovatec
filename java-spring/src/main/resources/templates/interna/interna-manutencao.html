@@ -12,6 +12,7 @@
     <header th:insert="~{fragmentos/header :: header}">Interno Manutenção</header>
 
     <main class="main-content">
+        <div class="interna-manutencao-container">
         <div class="container">
             <h2>Página Interna - Manutenção</h2>
 
@@ -29,6 +30,12 @@
                 </div>
                 <a th:href="@{/machines/{id}(id=${machine.id})}" class="view-components-btn">Visualizar Componentes</a>
             </div>
+        </div>
+        <br>
+        <br>           
+        <button class="home-btn">
+            <a th:href="@{/}" class="link-no-style">Sair</a>
+        </button>
         </div>
     </main>
 
