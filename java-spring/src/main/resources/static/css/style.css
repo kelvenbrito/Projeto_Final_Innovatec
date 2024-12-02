@@ -211,6 +211,28 @@ footer {
     background-color: #0056b3;
 }
 
+/* Estilo botão sair */
+ .btn-sair{
+    margin-left: 1000px;
+    margin-top: 5px;
+    height: 25px;
+    width: 50px;    
+    background-color: gray;
+    color: black;
+    border: none;       
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  
+}
+
+ .btn-sair:hover {
+    background-color: darkgray;
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.2);
+}
+
+ 
+
 /* Estilo do título da página */
 h1 {
     font-size: 2.5rem;
@@ -233,7 +255,10 @@ p {
     margin-top: 1px;
     margin-right: 2px;
     width: 35px;
-    border-radius: 5px;
+    border-radius: 5px;    
+}
 
-    
+#titulo{
+    margin-top: 20px;
+    margin-left: 10px;
 }
