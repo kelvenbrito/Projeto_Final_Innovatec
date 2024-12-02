@@ -4,15 +4,15 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TodolistScreen extends StatefulWidget {
+class InternaScreen extends StatefulWidget {
   final User user;
-  const TodolistScreen({super.key, required this.user});
+  const InternaScreen({super.key, required this.user});
 
   @override
-  State<TodolistScreen> createState() => _TodolistScreenState();
+  State<InternaScreen> createState() => _InternaScreenState();
 }
 
-class _TodolistScreenState extends State<TodolistScreen> {
+class _InternaScreenState extends State<InternaScreen> {
   final AuthService _service = AuthService();
   final String _scannedData = "Nenhum QR Code escaneado"; // Dados escaneados
 
@@ -44,7 +44,9 @@ class _TodolistScreenState extends State<TodolistScreen> {
                   MaterialPageRoute(
                     builder: (context) => QRScannerScreen(
                       onScan: (data) async {
+                       
                         if (await canLaunch(data)) {
+                   
                           await launch(data);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -77,7 +79,7 @@ class _TodolistScreenState extends State<TodolistScreen> {
       bottomNavigationBar: Container(
         height: 60,
         color: Colors.black,
-        child: Center(
+        child: const Center(
           child: Text(
             'Footer Content',
             style: TextStyle(color: Colors.white),
@@ -92,7 +94,7 @@ class _TodolistScreenState extends State<TodolistScreen> {
 class QRScannerScreen extends StatelessWidget {
   final Function(String) onScan;
 
-  const QRScannerScreen({Key? key, required this.onScan}) : super(key: key);
+  const QRScannerScreen({super.key, required this.onScan});
 
   @override
   Widget build(BuildContext context) {

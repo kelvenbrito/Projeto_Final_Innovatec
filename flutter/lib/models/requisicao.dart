@@ -1,14 +1,14 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Todolist {
+class Requisicao {
   //atributos
   final String id;
    String titulo;
   final String userId;
   final DateTime timestamp;
 
-  Todolist({required this.id, required this.titulo, required this.userId, required this.timestamp});
+  Requisicao({required this.id, required this.titulo, required this.userId, required this.timestamp});
 
   // toMap
   Map<String, dynamic> toMap() {
@@ -19,8 +19,8 @@ class Todolist {
     };
   }
   // fromMap
-  factory Todolist.fromMap(Map<String, dynamic> map, String doc) {
-    return Todolist(
+  factory Requisicao.fromMap(Map<String, dynamic> map, String doc) {
+    return Requisicao(
       id: doc,
       titulo: map['titulo'],
       userId: map['userid'],

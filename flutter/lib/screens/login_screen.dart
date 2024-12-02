@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_somativa/screens/todolist_screen.dart';
+import 'package:flutter_somativa/screens/interna_screen.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TodolistScreen(user: user), // Navega para a tela de lista de tarefas
+          builder: (context) => InternaScreen(user: user), // Navega para a tela de lista de tarefas
         ),
       );
 
