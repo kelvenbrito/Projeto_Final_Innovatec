@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.industria.models.Usuario;
 import com.example.industria.repositories.UsuarioRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UsuarioController {
 
@@ -32,10 +34,21 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findByEmail(email);  // Usando findByEmail
 
         if (usuario != null && usuario.getSenha().equals(senha)) {
-            return "redirect:/machines";  // Redireciona para a página principal após login bem-sucedido
+            return "redirect:/almox";  // Redireciona para a página principal após login bem-sucedido
         } else {
             model.addAttribute("loginError", "Usuário ou senha incorretos!");
             return "login";  // Retorna à página de login com a mensagem de erro
         }
     }
+
+    
+
+      // Método GET para realizar logout
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // Invalidar a sessão
+        session.invalidate();
+        return "redirect:/";  // Redireciona para a página inicial
+            }
+
 }
