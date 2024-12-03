@@ -8,9 +8,8 @@ class RequisicaoScreen extends StatefulWidget {
   const RequisicaoScreen({super.key, required this.userId});
 
   @override
- State<RequisicaoScreen> createState() => _RequisicaoScreenState();
+  State<RequisicaoScreen> createState() => _RequisicaoScreenState();
 }
-
 
 class _RequisicaoScreenState extends State<RequisicaoScreen> {
   final RequisicaoController _controller = RequisicaoController();
@@ -30,7 +29,8 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
   }
 
   void _addRequisicao() async {
-    if (_descriptionController.text.isNotEmpty && _machineController.text.isNotEmpty) {
+    if (_descriptionController.text.isNotEmpty &&
+        _machineController.text.isNotEmpty) {
       final requisicao = Requisicao(
         id: '',
         description: _descriptionController.text,
@@ -59,6 +59,56 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
     _descriptionController.clear();
     _fetchRequisicoes();
   }
+void _editRequisicaoDialog(Requisicao requisicao) {
+  _descriptionController.text = requisicao.description;
+  _machineController.text = requisicao.machineId;
+  _nameController.text = requisicao.nameMachine;
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Editar Requisição'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Nome da Máquina'),
+            ),
+            TextField(
+              controller: _machineController,
+              decoration: const InputDecoration(labelText: 'ID da Máquina'),
+            ),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(labelText: 'Descrição'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Fecha o diálogo sem salvar
+            },
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              requisicao.nameMachine = _nameController.text;
+              requisicao.machineId = _machineController.text;
+              requisicao.description = _descriptionController.text;
+
+              _updateRequisicao(requisicao); // Salva as alterações
+              Navigator.of(context).pop(); // Fecha o diálogo
+            },
+            child: const Text('Salvar'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +124,8 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Nome da Máquina'),
+                  decoration:
+                      const InputDecoration(labelText: 'Nome da Máquina'),
                 ),
                 TextField(
                   controller: _machineController,
@@ -105,8 +156,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
                       IconButton(
                         icon: const Icon(Icons.edit),
                         onPressed: () {
-                          _descriptionController.text = requisicao.description;
-                          _updateRequisicao(requisicao);
+                          _editRequisicaoDialog(requisicao);
                         },
                       ),
                       IconButton(
@@ -124,12 +174,12 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
     );
   }
 
-@override
-void dispose() {
-  _descriptionController.dispose(); // Libera recursos do controlador de descrição
-  _machineController.dispose();    // Libera recursos do controlador de máquina
-  _nameController.dispose();       // Libera recursos do controlador de nome
-  super.dispose();                 // Chama o método dispose() da classe base
-}
-
+  @override
+  void dispose() {
+    _descriptionController
+        .dispose(); // Libera recursos do controlador de descrição
+    _machineController.dispose(); // Libera recursos do controlador de máquina
+    _nameController.dispose(); // Libera recursos do controlador de nome
+    super.dispose(); // Chama o método dispose() da classe base
+  }
 }

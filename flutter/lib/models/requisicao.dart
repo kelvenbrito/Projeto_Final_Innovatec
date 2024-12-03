@@ -5,8 +5,8 @@ class Requisicao {
   final String id;
   String description;
   final String userId;
-  final String machineId;
-  final String nameMachine;
+  late final String machineId;
+  late final String nameMachine;
   final DateTime timestamp;
 
   Requisicao(
