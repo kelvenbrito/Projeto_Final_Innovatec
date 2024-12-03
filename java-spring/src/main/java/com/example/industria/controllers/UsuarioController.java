@@ -32,7 +32,7 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findByEmail(email);  // Usando findByEmail
 
         if (usuario != null && usuario.getSenha().equals(senha)) {
-            return "redirect:/machines";  // Redireciona para a página principal após login bem-sucedido
+            return "redirect:/almox";  // Redireciona para a página principal após login bem-sucedido
         } else {
             model.addAttribute("loginError", "Usuário ou senha incorretos!");
             return "login";  // Retorna à página de login com a mensagem de erro
