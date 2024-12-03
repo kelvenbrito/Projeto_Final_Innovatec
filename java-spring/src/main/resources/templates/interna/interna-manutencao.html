@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interno Manutenção</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header th:insert="~{fragmentos/header :: header}">Interno Manutenção</header>
+    <main id =btn-sair>
+        <button class="btn-sair">
+            <a th:href="@{/}" class="link-no-style">Sair</a>
+        </button>
+    </main>
+    <main class="main-content">      
+      
+        <div class="interna-manutencao-container">
+        <div class="container">
+            <h2>Página Interna - Manutenção</h2>
+
+            <!-- Mensagem de alerta -->
+            <div th:if="${msg}" th:classappend="'alert ' + classe" style="color: green;">
+                <span th:text="${msg}"></span>
+            </div>
+
+            <!-- Lista de Máquinas com Estilo Card -->
+            <h3>Lista de Máquinas</h3>
+            <div th:each="machine : ${machines}" class="machine-card">
+                <div class="machine-details">
+                    <div class="machine-name" th:text="${machine.name}"></div>
+                    <div class="machine-description" th:text="${machine.description}"></div>
+                </div>
+                <a th:href="@{/machines/{id}(id=${machine.id})}" class="view-components-btn">Visualizar Componentes</a>
+            </div>
+        </div>      
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Interno Manutenção</footer>
+</body>
+</html>

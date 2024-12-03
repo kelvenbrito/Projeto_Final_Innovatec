@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/requisicao.dart';
 
@@ -17,9 +18,13 @@ class RequisicaoController{
   }
   //deletar
   Future<void> delete(String id) async{
-    print(id);
+    if (kDebugMode) {
+      print(id);
+    }
     await _firestore.collection('requisicao').doc(id).delete();
-    print("ok");
+    if (kDebugMode) {
+      print("ok");
+    }
   }
   //fetch list
   Future<List<Requisicao>> fetchList(String userId) async{
@@ -29,11 +34,17 @@ class RequisicaoController{
         'userid',
          isEqualTo: userId)
          .get();
-    print(result.size);
+    if (kDebugMode) {
+      print(result.size);
+    }
     List<dynamic> convert = result.docs as List;
-    print(convert.length);
+    if (kDebugMode) {
+      print(convert.length);
+    }
     _list = convert.map((doc) => Requisicao.fromMap(doc.data(),doc.id)).toList();
-    print(_list.length);
+    if (kDebugMode) {
+      print(_list.length);
+    }
     return _list;    
   }
 
@@ -41,13 +52,15 @@ class RequisicaoController{
 Future<void> update(Requisicao task) async {
   try {
     await _firestore.collection('requisicao').doc(task.id).update({
-      'titulo': task.titulo,
+      'nome': task.nameMachine,
     
     });
   } catch (e) {
     // Trate qualquer erro que possa ocorrer durante a atualização
-    print("Erro ao atualizar tarefa: $e");
-    throw Exception("Erro ao atualizar tarefa");
+    if (kDebugMode) {
+      print("Erro ao atualizar requisicao: $e");
+    }
+    throw Exception("Erro ao atualizar requisicao");
   }
 }
 

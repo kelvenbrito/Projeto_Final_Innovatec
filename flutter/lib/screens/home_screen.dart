@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Container(
         height: 60,
         color: Colors.black,  // Footer preto
-        child: Center(
+        child: const Center(
           child: Text(
             'INNOVATEC',
             style: TextStyle(color: Colors.white),

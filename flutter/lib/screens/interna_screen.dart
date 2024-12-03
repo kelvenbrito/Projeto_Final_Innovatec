@@ -67,6 +67,13 @@ class _InternaScreenState extends State<InternaScreen> {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
               ),
             ),
+
+                 ElevatedButton.icon(
+                 onPressed: () {
+                Navigator.pushNamed(context, '/requisicao');
+              }, label: const Text("Requisição"),
+                 ),
+
             const SizedBox(height: 20),
             Text(
               _scannedData,

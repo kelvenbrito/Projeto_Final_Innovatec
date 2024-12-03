@@ -14,7 +14,7 @@ import com.example.industria.repositories.SparePartRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/almox")
+@RequestMapping("/machines")
 public class MachineController {
 
     private final MachineRepository machineRepository;
@@ -28,8 +28,8 @@ public class MachineController {
     @GetMapping
     public String listarMachines(Model model) {
         List<Machine> machines = machineRepository.findAll();
-        model.addAttribute("almox", machines);
-        return "interna/interna-almoxarifado"; // Retorna para o template
+        model.addAttribute("machines", machines);
+        return "interna/interna-manutencao"; // Retorna para o template
     }
 
     @GetMapping("/{id}")
