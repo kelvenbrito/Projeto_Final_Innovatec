@@ -262,3 +262,35 @@ p {
     margin-top: 20px;
     margin-left: 10px;
 }
+
+.input-quantity {
+    width: 60px;
+    margin-right: 10px;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 70px;
+}
+
+.btn-remove {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 70px;
+}
+
+.increment-form, .decrement-form {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 18px;
+}
+

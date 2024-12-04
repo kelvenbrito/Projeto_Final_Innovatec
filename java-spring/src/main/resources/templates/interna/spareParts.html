@@ -8,12 +8,24 @@
 </head>
 <body>
     <!-- Cabeçalho -->
-    <header th:insert="~{fragmentos/header :: header}">Peças de Reposição</header>
+    <header th:insert="~{fragmentos/header :: header}"></header>
 
+    <!-- Botão de Sair -->
+    <main id="btn-sair">
+        <button class="btn-sair">
+            <a th:href="@{/}" class="link-no-style">Sair</a>
+        </button>
+    </main>
+    
     <main class="main-content">
         <div class="interna-manutencao-container">
             <div class="container">
                 <h2>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h2>
+
+                <!-- Mensagem de Feedback -->
+                <div th:if="${msg}" class="alert" th:classappend="'alert-' + ${msgType}">
+                    <span th:text="${msg}"></span>
+                </div>
 
                 <!-- Lista de Peças com Estilo Card -->
                 <h3>Lista de Peças de Reposição</h3>
@@ -23,7 +35,20 @@
                         <div class="machine-description" th:text="${sparePart.description}"></div>
                         <div class="machine-quantity" th:text="'Quantidade disponível: ' + ${sparePart.quantityAvailable}"></div>
                     </div>
-                    <a th:href="@{/spareParts/{id}(id=${sparePart.id})}" class="view-components-btn">Ver Detalhes</a>
+                    
+                    <!-- Formulário de Incremento -->
+                    <form th:action="@{/spareParts/increment}" method="post" class="increment-form">
+                        <input type="hidden" name="id" th:value="${sparePart.id}" />
+                        <input type="number" name="quantity" min="1" value="0" class="input-quantity" />
+                        <button type="submit" class="btn btn-add">Adicionar</button>
+                    </form>
+
+                    <!-- Formulário de Decremento -->
+                    <form th:action="@{/spareParts/decrement}" method="post" class="decrement-form">
+                        <input type="hidden" name="id" th:value="${sparePart.id}" />
+                        <input type="number" name="quantity" min="1" max="${sparePart.quantityAvailable}" value="0" class="input-quantity" />
+                        <button type="submit" class="btn btn-remove">Remover</button>
+                    </form>
                 </div>
 
                 <!-- Botão Voltar -->
@@ -31,10 +56,14 @@
                     <a href="/almox" class="link-no-style">Voltar para Máquinas</a>
                 </button>
             </div>
+            <button class="home-btn">
+                <a th:href="@{/}" class="link-no-style">Voltar</a>
+            </button>
+        </div>
         </div>
     </main>
 
     <!-- Rodapé -->
-    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Peças de Reposição</footer>
+    <footer th:insert="~{fragmentos/footer :: footer}"></footer>
 </body>
 </html>
