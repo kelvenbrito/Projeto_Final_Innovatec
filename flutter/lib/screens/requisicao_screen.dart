@@ -53,13 +53,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
     _fetchRequisicoes();
   }
 
-  void _updateRequisicao(Requisicao requisicao) async {
-    requisicao.description = _descriptionController.text;
-    await _controller.update(requisicao);
-    _descriptionController.clear();
-    _fetchRequisicoes();
-  }
-void _editRequisicaoDialog(Requisicao requisicao) {
+  void _editRequisicaoDialog(Requisicao requisicao) {
   _descriptionController.text = requisicao.description;
   _machineController.text = requisicao.machineId;
   _nameController.text = requisicao.nameMachine;
@@ -94,12 +88,23 @@ void _editRequisicaoDialog(Requisicao requisicao) {
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              // Atualiza o objeto requisicao com os novos valores
               requisicao.nameMachine = _nameController.text;
               requisicao.machineId = _machineController.text;
               requisicao.description = _descriptionController.text;
 
-              _updateRequisicao(requisicao); // Salva as alterações
+              // Atualiza a requisição no backend
+              await _controller.update(requisicao);
+
+              // Limpa os controladores
+              _descriptionController.clear();
+              _machineController.clear();
+              _nameController.clear();
+
+              // Atualiza a lista
+              _fetchRequisicoes();
+
               Navigator.of(context).pop(); // Fecha o diálogo
             },
             child: const Text('Salvar'),
@@ -109,6 +114,7 @@ void _editRequisicaoDialog(Requisicao requisicao) {
     },
   );
 }
+
 
   @override
   Widget build(BuildContext context) {

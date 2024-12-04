@@ -4,22 +4,29 @@ class Requisicao {
   //atributos
   final String id;
   String description;
+  String machineId;
+  String nameMachine;
   final String userId;
-  late final String machineId;
-  late final String nameMachine;
   final DateTime timestamp;
 
-  Requisicao(
-      {required this.id,
-      required this.description,
-      required this.userId,
-      required this.machineId,
-      required this.nameMachine,
-      required this.timestamp});
+  Requisicao({
+    required this.id,
+    required this.description,
+    required this.userId,
+    required this.machineId,
+    required this.nameMachine,
+    required this.timestamp,
+  });
 
   // toMap
   Map<String, dynamic> toMap() {
-    return {'nameMachine': nameMachine, 'machineId': machineId, 'userid': userId, 'description': description,  'timestamp': timestamp};
+    return {
+      'nameMachine': nameMachine,
+      'machineId': machineId,
+      'userid': userId,
+      'description': description,
+      'timestamp': timestamp,
+    };
   }
 
   // fromMap

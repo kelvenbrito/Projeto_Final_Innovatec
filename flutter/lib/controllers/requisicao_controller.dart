@@ -48,12 +48,13 @@ class RequisicaoController{
     return _list;    
   }
 
-  //editar
+//editar
 Future<void> update(Requisicao task) async {
   try {
     await _firestore.collection('requisicao').doc(task.id).update({
-      'nome': task.nameMachine,
-    
+      'nameMachine': task.nameMachine,
+      'machineId': task.machineId,
+      'description': task.description,
     });
   } catch (e) {
     // Trate qualquer erro que possa ocorrer durante a atualização
