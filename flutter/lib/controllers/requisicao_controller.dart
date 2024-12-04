@@ -27,33 +27,47 @@ class RequisicaoController{
     }
   }
   //fetch list
-  Future<List<Requisicao>> fetchList(String userId) async{
-    final QuerySnapshot result = await _firestore.collection(
-      'requisicao')
-      .where(
-        'userid',
-         isEqualTo: userId)
-         .get();
+Future<List<Requisicao>> fetchList(String userId) async {
+  try {
+    // Busca documentos no Firestore
+    final QuerySnapshot result = await _firestore
+        .collection('requisicao')
+        .where('userid', isEqualTo: userId)
+        .get();
+
+    // Log para verificar a quantidade de documentos retornados
     if (kDebugMode) {
-      print(result.size);
+      print('Total de documentos encontrados: ${result.docs.length}');
     }
-    List<dynamic> convert = result.docs as List;
+
+    // Converte os documentos em objetos do tipo Requisicao
+    _list = result.docs.map((doc) {
+      return Requisicao.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+    }).toList();
+
+    // Log do tamanho da lista convertida
     if (kDebugMode) {
-      print(convert.length);
+      print('Total de itens na lista: ${_list.length}');
     }
-    _list = convert.map((doc) => Requisicao.fromMap(doc.data(),doc.id)).toList();
+
+    return _list;
+  } catch (e) {
+    // Log de erro
     if (kDebugMode) {
-      print(_list.length);
+      print('Erro ao buscar lista de requisições: $e');
     }
-    return _list;    
+    throw Exception('Erro ao buscar lista de requisições');
   }
+}
 
 //editar
 Future<void> update(Requisicao task) async {
   try {
     await _firestore.collection('requisicao').doc(task.id).update({
-      'nameMachine': task.nameMachine,
       'machineId': task.machineId,
+      'nameMachine': task.nameMachine,
+      'nomePeca': task.nomePeca,
+      'qtdPeca': task.qtdPeca,
       'description': task.description,
     });
   } catch (e) {
