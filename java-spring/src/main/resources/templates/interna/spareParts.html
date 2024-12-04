@@ -11,22 +11,26 @@
     <header th:insert="~{fragmentos/header :: header}">Peças de Reposição</header>
 
     <main class="main-content">
-        <div class="container">
-            <h2>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h2>
+        <div class="interna-manutencao-container">
+            <div class="container">
+                <h2>Peças de Reposição da Máquina: <span th:text="${machine.name}"></span></h2>
 
-            <!-- Lista de Peças com Estilo Card -->
-            <h3>Lista de Peças de Reposição</h3>
-            <div th:each="sparePart : ${spareParts}" class="spare-part-card">
-                <div class="spare-part-details">
-                    <div class="spare-part-name" th:text="${sparePart.name}"></div>
-                    <div class="spare-part-description" th:text="${sparePart.description}"></div>
-                    <div class="spare-part-quantity" th:text="'Quantidade disponível: ' + ${sparePart.quantityAvailable}"></div>
+                <!-- Lista de Peças com Estilo Card -->
+                <h3>Lista de Peças de Reposição</h3>
+                <div th:each="sparePart : ${spareParts}" class="machine-card">
+                    <div class="machine-details">
+                        <div class="machine-name" th:text="${sparePart.name}"></div>
+                        <div class="machine-description" th:text="${sparePart.description}"></div>
+                        <div class="machine-quantity" th:text="'Quantidade disponível: ' + ${sparePart.quantityAvailable}"></div>
+                    </div>
+                    <a th:href="@{/spareParts/{id}(id=${sparePart.id})}" class="view-components-btn">Ver Detalhes</a>
                 </div>
-                <a th:href="@{/spareParts/{id}(id=${sparePart.id})}" class="view-details-btn">Ver Detalhes</a>
-            </div>
 
-            <!-- Botão Voltar -->
-            <a href="/almox" class="back-btn">Voltar para Máquinas</a>
+                <!-- Botão Voltar -->
+                <button class="btn-sair">
+                    <a href="/almox" class="link-no-style">Voltar para Máquinas</a>
+                </button>
+            </div>
         </div>
     </main>
 
