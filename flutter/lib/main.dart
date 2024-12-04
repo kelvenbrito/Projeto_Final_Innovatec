@@ -4,6 +4,7 @@ import 'package:flutter_somativa/screens/register_screen.dart';
 import 'package:flutter_somativa/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_somativa/screens/requisicao_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,8 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/requisicao': (context) => const RequisicaoScreen(userId: '',),
+
         
       },
     );

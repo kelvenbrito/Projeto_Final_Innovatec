@@ -1,67 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interno</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>Interno Manutenção</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
-    
-    <!-- Inserir o cabeçalho -->
-    <div th:insert="~{fragmentos/header :: header}"><!-- barra de menu --></div>
-    
-    <div class="barra-intermediaria"></div>
-
-    <main class="main-content">
+    <!-- Cabeçalho -->
+    <header th:insert="~{fragmentos/header :: header}">Interno Manutenção</header>
+    <main id =btn-sair>
+        <button class="btn-sair">
+            <a th:href="@{/}" class="link-no-style">Sair</a>
+        </button>
+    </main>
+    <main class="main-content">      
+      
+        <div class="interna-manutencao-container">
         <div class="container">
-            <h2>Gestão de Almoxarifado</h2>
-            
-            <!-- Mensagem de alerta, se houver -->
-            <div th:if="${msg}" th:classappend="${classe}" style="color: green;">
+            <h2>Página Interna - Manutenção</h2>
+
+            <!-- Mensagem de alerta -->
+            <div th:if="${msg}" th:classappend="'alert ' + classe" style="color: green;">
                 <span th:text="${msg}"></span>
             </div>
-            
-            <!-- To-Do List -->
-            <div class="todo-list-container">
-                <h3>Lista de Itens no Almoxarifado</h3>
-                
-                <!-- Formulário para adicionar itens -->
-                <form th:action="@{/almoxarifado/adicionar}" method="post" class="add-item-form">
-                    <input type="text" name="itemNome" placeholder="Nome do Item" required>
-                    <input type="number" name="quantidade" placeholder="Quantidade" min="1" required>
-                    <button type="submit">Adicionar</button>
-                </form>
-                
-                <!-- Tabela para exibir itens -->
-                <table class="item-table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Quantidade</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Iterar sobre a lista de itens -->
-                        <tr th:each="item : ${itens}">
-                            <td th:text="${item.nome}"></td>
-                            <td th:text="${item.quantidade}"></td>
-                            <td>
-                                <!-- Botão para remover o item -->
-                                <form th:action="@{/almoxarifado/remover/{id}(id=${item.id})}" method="post">
-                                    <button type="submit" class="remove-btn">Remover</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <!-- Lista de Máquinas com Estilo Card -->
+            <h3>Lista de Máquinas</h3>
+            <div th:each="machine : ${machines}" class="machine-card">
+                <div class="machine-details">
+                    <div class="machine-name" th:text="${machine.name}"></div>
+                    <div class="machine-description" th:text="${machine.description}"></div>
+                </div>
+                <a th:href="@{/almox/{id}(id=${machine.id})}" class="view-components-btn">Visualizar Componentes</a>
             </div>
+        </div>      
         </div>
     </main>
 
-    <!-- Inserir o rodapé -->
-    <div th:insert="~{fragmentos/footer :: footer}"><!-- barra de rodapé --></div>
-    
+    <!-- Rodapé -->
+    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Interno Manutenção</footer>
 </body>
 </html>

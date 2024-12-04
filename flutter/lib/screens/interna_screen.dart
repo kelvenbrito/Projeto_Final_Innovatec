@@ -1,22 +1,19 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TodolistScreen extends StatefulWidget {
+class InternaScreen extends StatefulWidget {
   final User user;
-  const TodolistScreen({super.key, required this.user});
+  const InternaScreen({super.key, required this.user});
 
   @override
-  State<TodolistScreen> createState() => _TodolistScreenState();
+  State<InternaScreen> createState() => _InternaScreenState();
 }
 
-class _TodolistScreenState extends State<TodolistScreen> {
+class _InternaScreenState extends State<InternaScreen> {
   final AuthService _service = AuthService();
-
   final String _scannedData = "Nenhum QR Code escaneado"; // Dados escaneados
 
   @override
@@ -24,6 +21,7 @@ class _TodolistScreenState extends State<TodolistScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QRStock'),
+        backgroundColor: Colors.black,  // Background preto para o header
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -45,8 +43,10 @@ class _TodolistScreenState extends State<TodolistScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => QRScannerScreen(
-                      onScan: (data)async {
+                      onScan: (data) async {
+                       
                         if (await canLaunch(data)) {
+                   
                           await launch(data);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -59,21 +59,38 @@ class _TodolistScreenState extends State<TodolistScreen> {
                 );
               },
               icon: const Icon(Icons.qr_code, size: 36), // Ícone maior
-              label: const Text(
-                'Escanear QR Code'),
+              label: const Text('Escanear QR Code'),
               style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black, backgroundColor: Colors.grey,  // Cor do texto
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 textStyle: const TextStyle(fontSize: 20),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
               ),
-             
             ),
+
+                 ElevatedButton.icon(
+                 onPressed: () {
+                Navigator.pushNamed(context, '/requisicao');
+              }, label: const Text("Requisição"),
+                 ),
+
             const SizedBox(height: 20),
             Text(
               _scannedData,
               style: const TextStyle(fontSize: 18),
-              textAlign: TextAlign.center
+              textAlign: TextAlign.center,
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        color: Colors.black,
+        child: const Center(
+          child: Text(
+            'Footer Content',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -84,13 +101,14 @@ class _TodolistScreenState extends State<TodolistScreen> {
 class QRScannerScreen extends StatelessWidget {
   final Function(String) onScan;
 
-  const QRScannerScreen({Key? key, required this.onScan}) : super(key: key);
+  const QRScannerScreen({super.key, required this.onScan});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Escaneie um QR Code'),
+        backgroundColor: Colors.black,
       ),
       body: MobileScanner(
         onDetect: (capture) {
@@ -98,7 +116,7 @@ class QRScannerScreen extends StatelessWidget {
           for (final barcode in barcodes) {
             if (barcode.rawValue != null) {
               onScan(barcode.rawValue!);
-                Navigator.pop(context); // Volta para a tela anterior.
+              Navigator.pop(context); // Volta para a tela anterior.
               break;
             }
           }
