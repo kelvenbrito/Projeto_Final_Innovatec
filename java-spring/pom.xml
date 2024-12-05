@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version> <!-- Confirme se essa versão é compatível com suas dependências -->
+        <version>3.3.5</version>        <!-- Confirme se essa versão é compatível com suas dependências -->
         <relativePath/>
     </parent>
 
@@ -17,7 +17,7 @@
     <description>Aplicação de gerenciamento de tarefas usando Kanban</description>
 
     <properties>
-        <java.version>17</java.version> <!-- Certifique-se de que está usando Java 17 ou a versão desejada -->
+        <java.version>17</java.version>        <!-- Certifique-se de que está usando Java 17 ou a versão desejada -->
     </properties>
 
     <dependencies>
@@ -82,6 +82,13 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- Adicionar Spring Security ao projeto -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

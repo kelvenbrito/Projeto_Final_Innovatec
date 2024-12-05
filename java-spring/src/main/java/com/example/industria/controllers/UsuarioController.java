@@ -18,24 +18,32 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    // Método GET para exibir a página de login
+    // Exibir a página de login
     @GetMapping("/login")
-    public String exibirLogin() {
-        return "login";  // Retorna o template de login
+    public String exibirLogin(@RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "logout", required = false) String logout,
+                              Model model) {
+        if (error != null) {
+            model.addAttribute("loginError", "Credenciais inválidas. Por favor, tente novamente.");
+        }
+        if (logout != null) {
+            model.addAttribute("logoutMessage", "Você saiu com sucesso.");
+        }
+        return "login"; // Retorna o template 'login.html'
     }
 
     // Método POST para validar o login
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,  // Alterar nome para email
+    public String login(@RequestParam("email") String email,  // Alterado para e-mail
                         @RequestParam("senha") String senha,
                         Model model) {
-        Usuario usuario = usuarioRepository.findByEmail(email);  // Usando findByEmail
+        Usuario usuario = usuarioRepository.findByEmail(email);  // Busca pelo e-mail
 
         if (usuario != null && usuario.getSenha().equals(senha)) {
             return "redirect:/almox";  // Redireciona para a página principal após login bem-sucedido
         } else {
-            model.addAttribute("loginError", "Usuário ou senha incorretos!");
-            return "login";  // Retorna à página de login com a mensagem de erro
+            model.addAttribute("loginError", "Usuário ou senha incorretos!"); // Mensagem de erro
+            return "login";  // Retorna ao template de login
         }
     }
 }
