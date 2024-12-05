@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_somativa/screens/interna_screen.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -109,29 +111,32 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  Future<void> _acessarTodoList() async {
-    User? user = await _loginUser(); // Tenta realizar o login do usuário
-    if (user != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => InternaScreen(user: user), // Navega para a tela de lista de tarefas
-        ),
-      );
+Future<void> _acessarTodoList() async {
+  User? user = await _loginUser(); // Tenta realizar o login do usuário
+  if (user != null) {
+    String userId = user.uid; // Recupera o ID do usuário logado
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Login realizado com sucesso!"), // Mostra um snackbar de sucesso
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Usuário ou senha inválidos"), // Mostra um snackbar de erro
-        ),
-      );
-      _emailController.clear(); // Limpa o campo de email
-      _passwordController.clear(); // Limpa o campo de senha
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InternaScreen(user: user, userId: userId), // Passa o ID do usuário para a próxima tela
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Login realizado com sucesso!"), // Mostra um snackbar de sucesso
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Usuário ou senha inválidos"), // Mostra um snackbar de erro
+      ),
+    );
+    _emailController.clear(); // Limpa o campo de email
+    _passwordController.clear(); // Limpa o campo de senha
   }
+}
+
 }

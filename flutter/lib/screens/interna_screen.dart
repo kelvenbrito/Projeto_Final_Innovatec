@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class InternaScreen extends StatefulWidget {
   final User user;
-  const InternaScreen({super.key, required this.user});
+  const InternaScreen({super.key, required this.user, required String userId});
 
   @override
   State<InternaScreen> createState() => _InternaScreenState();
@@ -21,7 +21,7 @@ class _InternaScreenState extends State<InternaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('QRStock'),
-        backgroundColor: Colors.black,  // Background preto para o header
+        backgroundColor: Colors.black, // Background preto para o header
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -32,7 +32,8 @@ class _InternaScreenState extends State<InternaScreen> {
           ),
         ],
       ),
-      body: Center( // Centraliza o conteúdo
+      body: Center(
+        // Centraliza o conteúdo
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -44,13 +45,12 @@ class _InternaScreenState extends State<InternaScreen> {
                   MaterialPageRoute(
                     builder: (context) => QRScannerScreen(
                       onScan: (data) async {
-                       
                         if (await canLaunch(data)) {
-                   
                           await launch(data);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Não foi possível abrir: $data')),
+                            SnackBar(
+                                content: Text('Não foi possível abrir: $data')),
                           );
                         }
                       },
@@ -61,18 +61,28 @@ class _InternaScreenState extends State<InternaScreen> {
               icon: const Icon(Icons.qr_code, size: 36), // Ícone maior
               label: const Text('Escanear QR Code'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black, backgroundColor: Colors.grey,  // Cor do texto
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.grey, // Cor do texto
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 textStyle: const TextStyle(fontSize: 20),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
               ),
             ),
 
-                 ElevatedButton.icon(
-                 onPressed: () {
+            ElevatedButton.icon(
+              onPressed: () {
                 Navigator.pushNamed(context, '/requisicao');
-              }, label: const Text("Requisição"),
-                 ),
+              },
+              label: const Text("Requisição"),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, '/maquinas');
+              },
+              label: const Text("Maquinas"),
+            ),
 
             const SizedBox(height: 20),
             Text(

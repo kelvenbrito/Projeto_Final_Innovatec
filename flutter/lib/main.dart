@@ -1,5 +1,6 @@
 import 'package:flutter_somativa/firebase_options.dart';
 import 'package:flutter_somativa/screens/home_screen.dart';
+import 'package:flutter_somativa/screens/maquinas_screen.dart';
 import 'package:flutter_somativa/screens/register_screen.dart';
 import 'package:flutter_somativa/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +27,8 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-        '/requisicao': (context) => const RequisicaoScreen(userId: '',),
+        '/requisicao': (context) => const RequisicaoScreen(userEmail: '', machineData: {},),
+        '/maquinas': (context) => PesquisaMaquinas(),
 
         
       },

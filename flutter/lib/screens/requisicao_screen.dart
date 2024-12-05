@@ -1,11 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../controllers/requisicao_controller.dart';
 import '../models/requisicao.dart';
 
-class RequisicaoScreen extends StatefulWidget {
-  final String userId;
+class UserProvider extends ChangeNotifier {
+  String? _userId;
 
-  const RequisicaoScreen({super.key, required this.userId});
+  String? get userId => _userId;
+
+  setUserId(String userId) {
+    _userId = userId;
+    notifyListeners();
+  }
+}
+
+class RequisicaoScreen extends StatefulWidget {
+  final String userEmail;
+  final Map<String, dynamic> machineData;
+
+  const RequisicaoScreen({super.key, required this.userEmail,   required this.machineData,});
 
   @override
   State<RequisicaoScreen> createState() => _RequisicaoScreenState();
@@ -20,14 +34,25 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
   final TextEditingController _qtdPecaController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _fetchRequisicoes();
-  }
+@override
+void initState() {
+  super.initState();
+  final machineData = widget.machineData;
+  _machineController.text = machineData['idMaquina'] ?? '';
+  _nameController.text = machineData['nomeMaquina'] ?? '';
+  _descriptionController.text = machineData['descricao'] ?? '';
+  _nomePecaController.text = machineData['nomePeca'] ?? '';
+  _qtdPecaController.text = ''; // Este campo pode ser preenchido manualmente
+
+  _fetchRequisicoes(); // Chamando após preencher os dados iniciais
+}
+
 
   Future<void> _fetchRequisicoes() async {
-    await _controller.fetchList(widget.userId);
-    print('Requisições carregadas: ${_controller.list}');
+    await _controller.fetchList(widget.userEmail);
+    if (kDebugMode) {
+      print('Requisições carregadas: ${_controller.list}');
+    }
     setState(() {});
   }
 
@@ -37,7 +62,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
       final requisicao = Requisicao(
         id: '',
         description: _descriptionController.text,
-        userId: widget.userId,
+        userEmail: widget.userEmail,
         machineId: _machineController.text,
         nameMachine: _nameController.text,
         nomePeca: _nomePecaController.text,
@@ -127,6 +152,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
                 // Atualiza a lista
                 _fetchRequisicoes();
 
+              
                 Navigator.of(context).pop(); // Fecha o diálogo
               },
               child: const Text('Salvar'),
@@ -139,6 +165,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
 
   @override
   Widget build(BuildContext context) {
+     final userId = Provider.of<UserProvider>(context).userId;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Requisições'),
