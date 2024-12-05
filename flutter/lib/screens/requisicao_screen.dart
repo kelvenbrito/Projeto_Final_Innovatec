@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../controllers/requisicao_controller.dart';
 import '../models/requisicao.dart';
 
 class RequisicaoScreen extends StatefulWidget {
   final String userId;
+  final Map<String, dynamic> machineData;
 
-  const RequisicaoScreen({super.key, required this.userId});
+  const RequisicaoScreen({super.key, required this.userId,   required this.machineData,});
 
   @override
   State<RequisicaoScreen> createState() => _RequisicaoScreenState();
@@ -20,14 +22,25 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
   final TextEditingController _qtdPecaController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _fetchRequisicoes();
-  }
+@override
+void initState() {
+  super.initState();
+  final machineData = widget.machineData;
+  _machineController.text = machineData['idMaquina'] ?? '';
+  _nameController.text = machineData['nomeMaquina'] ?? '';
+  _descriptionController.text = machineData['descricao'] ?? '';
+  _nomePecaController.text = machineData['nomePeca'] ?? '';
+  _qtdPecaController.text = ''; // Este campo pode ser preenchido manualmente
+
+  _fetchRequisicoes(); // Chamando após preencher os dados iniciais
+}
+
 
   Future<void> _fetchRequisicoes() async {
     await _controller.fetchList(widget.userId);
-    print('Requisições carregadas: ${_controller.list}');
+    if (kDebugMode) {
+      print('Requisições carregadas: ${_controller.list}');
+    }
     setState(() {});
   }
 
@@ -127,6 +140,7 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
                 // Atualiza a lista
                 _fetchRequisicoes();
 
+              
                 Navigator.of(context).pop(); // Fecha o diálogo
               },
               child: const Text('Salvar'),

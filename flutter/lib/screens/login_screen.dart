@@ -109,29 +109,32 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  Future<void> _acessarTodoList() async {
-    User? user = await _loginUser(); // Tenta realizar o login do usuário
-    if (user != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => InternaScreen(user: user), // Navega para a tela de lista de tarefas
-        ),
-      );
+Future<void> _acessarTodoList() async {
+  User? user = await _loginUser(); // Tenta realizar o login do usuário
+  if (user != null) {
+    String userId = user.uid; // Recupera o ID do usuário logado
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Login realizado com sucesso!"), // Mostra um snackbar de sucesso
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Usuário ou senha inválidos"), // Mostra um snackbar de erro
-        ),
-      );
-      _emailController.clear(); // Limpa o campo de email
-      _passwordController.clear(); // Limpa o campo de senha
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InternaScreen(user: user, userId: userId), // Passa o ID do usuário para a próxima tela
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Login realizado com sucesso!"), // Mostra um snackbar de sucesso
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Usuário ou senha inválidos"), // Mostra um snackbar de erro
+      ),
+    );
+    _emailController.clear(); // Limpa o campo de email
+    _passwordController.clear(); // Limpa o campo de senha
   }
+}
+
 }
