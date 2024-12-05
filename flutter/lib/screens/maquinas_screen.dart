@@ -90,7 +90,7 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => RequisicaoScreen(
-                                      userId:
+                                      userEmail:
                                           "user123", // Exemplo de userId, substitua se necessário
                                       machineData: {
                                         'idMaquina': maquina['idMaquina'],

@@ -19,6 +19,8 @@ dependencies:
   flutter_email_sender: ^6.0.3
   mobile_scanner: ^3.0.0
   permission_handler: ^11.3.1
+  provider: ^6.1.2
+  shared_preferences: ^2.3.3
 
 
  

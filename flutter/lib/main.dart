@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-        '/requisicao': (context) => const RequisicaoScreen(userId: '', machineData: {},),
+        '/requisicao': (context) => const RequisicaoScreen(userEmail: '', machineData: {},),
         '/maquinas': (context) => PesquisaMaquinas(),
 
         

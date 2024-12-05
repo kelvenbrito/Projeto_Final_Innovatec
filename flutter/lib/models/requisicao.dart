@@ -5,7 +5,7 @@ class Requisicao {
   final String id;
   String machineId;
   String nameMachine;
-  final String userId;
+  final String userEmail;
   String nomePeca;
   String qtdPeca;
   String description;
@@ -13,7 +13,7 @@ class Requisicao {
 
   Requisicao({
     required this.id,
-    required this.userId,
+    required this.userEmail,
     required this.machineId,
     required this.nameMachine,
     required this.nomePeca,
@@ -27,7 +27,7 @@ Map<String, dynamic> toMap() {
   return {
     'nameMachine': nameMachine.isNotEmpty ? nameMachine : 'Máquina Desconhecida',
     'machineId': machineId.isNotEmpty ? machineId : 'ID Desconhecido',
-    'userid': userId,
+    'userid': userEmail,
     'nomePeca': nomePeca.isNotEmpty ? nomePeca : 'Peça Desconhecida',
     'qtdPeca': qtdPeca.isNotEmpty ? qtdPeca : '0',
     'description': description.isNotEmpty ? description : 'Sem descrição',
@@ -42,7 +42,7 @@ factory Requisicao.fromMap(Map<String, dynamic> map, String doc) {
     return Requisicao(
       id: doc,
       nameMachine: map['nameMachine'] ?? 'Máquina Desconhecida', // Valor padrão
-      userId: map['userid'] ?? '',
+      userEmail: map['userid'] ?? '',
       machineId: map['machineId'] ?? '',
       nomePeca: map['nomePeca'] ?? '',
       qtdPeca: map['qtdPeca'] ?? '0',

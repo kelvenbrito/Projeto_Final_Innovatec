@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_somativa/screens/interna_screen.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -62,11 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     labelText: 'Senha',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.grey),
+                      borderSide: BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.black),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
@@ -88,11 +86,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     labelText: 'Confirmar Senha',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.grey),
+                      borderSide: BorderSide(color: Colors.grey),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.black),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
@@ -125,42 +123,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-Future<void> _registrarUser(BuildContext context) async {
-  if (_formKey.currentState!.validate()) {
-    try {
-      // Registra o usuário e obtém o User do Firebase
-      User? user = await _service.registerUsuario(
+
+  Future<void> _registrarUser(BuildContext context) async {
+    if (_formKey.currentState!.validate()) { // Valida o formulário
+      await _service.registerUsuario( // Chama o método de registro do serviço de autenticação
         _emailController.text,
         _passwordController.text,
       );
 
-      if (user != null) {
-        String userId = user.uid; // Recupera o ID do usuário registrado
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Usuário registrado com sucesso!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-
-        // Navega para a página de login ou para a próxima tela com o userId
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InternaScreen(user: user, userId: userId),
-          ),
-        );
-      }
-    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao registrar usuário: $e'),
-          duration: const Duration(seconds: 3),
+        const SnackBar(
+          content: Text('Usuário registrado com sucesso!'), // Mostra um snackbar de sucesso
+          duration: Duration(seconds: 2),
         ),
       );
+
+      // Navega para a página de login após o registro
+      Navigator.pushNamed(context, '/login');
     }
   }
-}
-
 }
