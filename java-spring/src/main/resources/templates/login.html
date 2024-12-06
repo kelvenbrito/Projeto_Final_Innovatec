@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Login - Innovatech</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
 
     <!-- Header -->
@@ -18,45 +20,26 @@
             <h1>Login</h1>
 
             <!-- Exibição de mensagem de erro, se existir -->
-            <!-- <div th:if="${loginError}" class="error-message">
+            <div th:if="${loginError}" class="error-message">
                 <p th:text="${loginError}" style="color:red;"></p>
             </div>
 
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input type="text" id="email" name="email" placeholder="Digite seu e-mail" required>
+                    <label for="username">E-mail:</label>
+                    <input type="text" id="username" name="username" placeholder="Digite seu e-mail" required>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
                 </div>
                 <br>
                 <button type="submit" class="login-btn">Entrar</button>
-            </form> -->
-            
-            <form th:action="@{/login}" method="post">
-                <div th:if="${loginError}" class="error-message">
-                    <p th:text="${loginError}"></p>
-                </div>
-                <div th:if="${logoutMessage}" class="success-message">
-                    <p th:text="${logoutMessage}"></p>
-                </div>
-                <label for="username">Usuário:</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-                
-                <button type="submit">Entrar</button>
             </form>
 
-            
-            <br>           
-            <button class="home-btn">
-                <a th:href="@{/}" class="link-no-style">Voltar</a>
-            </button>
+            <br>
+            <a th:href="@{/}" class="home-btn link-no-style">Voltar</a>
         </div>
     </main>
 
@@ -64,4 +47,5 @@
     <div th:insert="~{fragmentos/footer :: footer}"></div>
 
 </body>
+
 </html>

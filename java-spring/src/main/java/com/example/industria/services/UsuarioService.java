@@ -3,7 +3,7 @@ package com.example.industria.services;
 import com.example.industria.models.Usuario;
 import com.example.industria.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,13 +36,29 @@ public class UsuarioService {
         usuarioRepository.deleteById(id); // Exclui o usuário pelo ID
     }
 
-
-    // // criar usuário com a senha criptografada
-    // private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    // criar usuário com a senha criptografada
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
 
+    // cadastra o admin
+    public void criarUsuarioComSenha(String nome, String email, String senha) {
+        // Criptografa a senha
+        String senhaCriptografada = passwordEncoder.encode(senha);
+
+        // Cria e popula o novo usuário
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senhaCriptografada);
+
+        // Salva no banco de dados
+        usuarioRepository.save(usuario);
+
+        System.out.println("Admin Registrado!");
+
+    }
 }
