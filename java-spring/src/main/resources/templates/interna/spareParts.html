@@ -6,6 +6,7 @@
     <title>Peças da Máquina</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <!-- Cabeçalho -->
     <header th:insert="~{fragmentos/header :: header}"></header>
@@ -13,10 +14,10 @@
     <!-- Botão de Sair -->
     <main id="btn-sair">
         <button class="btn-sair">
-            <a th:href="@{/}" class="link-no-style">Sair</a>
+            <a th:href="@{/logout}" class="link-no-style">Sair</a>
         </button>
     </main>
-    
+
     <main class="main-content">
         <div class="interna-manutencao-container">
             <div class="container">
@@ -35,31 +36,22 @@
                         <div class="machine-description" th:text="${sparePart.description}"></div>
                         <div class="machine-quantity" th:text="'Quantidade disponível: ' + ${sparePart.quantityAvailable}"></div>
                     </div>
-                    
-                    <!-- Formulário de Incremento -->
-                    <form th:action="@{/spareParts/increment}" method="post" class="increment-form">
-                        <input type="hidden" name="id" th:value="${sparePart.id}" />
-                        <input type="number" name="quantity" min="1" value="0" class="input-quantity" />
-                        <button type="submit" class="btn btn-add">Adicionar</button>
-                    </form>
 
-                    <!-- Formulário de Decremento -->
-                    <form th:action="@{/spareParts/decrement}" method="post" class="decrement-form">
+                    <!-- Formulário para Atualizar Quantidade -->
+                    <form th:action="@{/spareParts/update}" method="post" class="update-form">
                         <input type="hidden" name="id" th:value="${sparePart.id}" />
-                        <input type="number" name="quantity" min="1" max="${sparePart.quantityAvailable}" value="0" class="input-quantity" />
-                        <button type="submit" class="btn btn-remove">Remover</button>
+                        <label for="newQuantity">Nova Quantidade:</label>
+                        <input type="number" id="newQuantity" name="newQuantity" min="0" th:value="${sparePart.quantityAvailable}"
+                            class="input-quantity" required />
+                        <button type="submit" class="btn btn-update">Atualizar</button>
                     </form>
                 </div>
 
                 <!-- Botão Voltar -->
                 <button class="btn-sair">
-                    <a href="/" class="link-no-style">Voltar para Máquinas</a>
+                    <a th:href="@{/almox}" class="link-no-style">Voltar</a>
                 </button>
             </div>
-            <button class="home-btn">
-                <a th:href="@{/almox}" class="link-no-style">Voltar</a>
-            </button>
-        </div>
         </div>
     </main>
 

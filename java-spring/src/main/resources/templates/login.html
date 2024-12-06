@@ -24,6 +24,10 @@
                 <p th:text="${loginError}" style="color:red;"></p>
             </div>
 
+            <div th:if="${logoutMessage}" class="success-message">
+                <p th:text="${logoutMessage}" style="color:green;"></p>
+            </div>
+
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
                     <label for="username">E-mail:</label>
@@ -37,10 +41,10 @@
                 <br>
                 <button type="submit" class="login-btn">Entrar</button>
             </form>
-            
-          
-            
-            <br>           
+
+
+
+            <br>
             <button class="home-btn">
                 <a th:href="@{/}" class="link-no-style">Voltar</a>
             </button>

@@ -11,9 +11,12 @@
     <!-- Cabeçalho -->
     <header th:insert="~{fragmentos/header :: header}">Interno Manutenção</header>
     <main id =btn-sair>
-        <button class="btn-sair">
-            <a th:href="@{/}" class="link-no-style">Sair</a>
-        </button>
+
+        <!-- Logout -->
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-sair">Sair</button>
+        </form>
+        
     </main>
     <main class="main-content">      
       
