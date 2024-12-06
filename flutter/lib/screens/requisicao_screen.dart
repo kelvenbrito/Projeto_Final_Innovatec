@@ -80,6 +80,24 @@ void initState() {
     _nomePecaController.text = requisicao.nomePeca;
     _qtdPecaController.text = requisicao.qtdPeca;
 
+    DropdownButton<String>(
+  value: requisicao.status,
+  items: ['em aberto', 'concluido', 'finalizado']
+      .map((status) => DropdownMenuItem(
+            value: status,
+            child: Text(status),
+          ))
+      .toList(),
+  onChanged: (value) {
+    if (value != null) {
+      setState(() {
+        requisicao.status = value;
+      });
+    }
+  },
+);
+
+
     showDialog(
       context: context,
       builder: (context) {
@@ -223,6 +241,8 @@ void initState() {
                     const SizedBox(height: 4),
                     Text('Descrição: ${requisicao.description}'),
                     const SizedBox(height: 4),
+                    Text('Status: ${requisicao.status}'),
+                     const SizedBox(height: 4),
                     Text(
                       'Data: ${requisicao.timestamp.toString()}',
                       style: const TextStyle(color: Colors.grey),

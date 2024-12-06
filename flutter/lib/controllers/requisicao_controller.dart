@@ -14,6 +14,7 @@ class RequisicaoController{
   //métodos
   //add
   Future<void> add(Requisicao requisicao) async{
+    requisicao.status = 'em aberto'; // Define o status inicial
     await _firestore.collection('requisicao').add(requisicao.toMap());
   }
   //deletar
