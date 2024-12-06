@@ -1,6 +1,7 @@
 import 'package:flutter_somativa/firebase_options.dart';
 import 'package:flutter_somativa/screens/home_screen.dart';
 import 'package:flutter_somativa/screens/interna_screen.dart';
+import 'package:flutter_somativa/screens/leitorQRCodeScreen.dart';
 import 'package:flutter_somativa/screens/maquinas_screen.dart';
 import 'package:flutter_somativa/screens/register_screen.dart';
 import 'package:flutter_somativa/screens/login_screen.dart';
@@ -29,7 +30,7 @@ class MainApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/requisicao': (context) => const RequisicaoScreen(userId: '', machineData: {},),
-        '/qrcode':(context) => QRScannerScreen(onScan: (String ) {  },),
+        '/qrcode':(context) =>ScannerPage(),
         '/maquinas': (context) => const PesquisaMaquinas(),
 
         

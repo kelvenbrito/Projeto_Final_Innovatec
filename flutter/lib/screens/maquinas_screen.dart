@@ -19,20 +19,23 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
     super.initState();
     idMaquina = widget.qrCodeValue; // Inicializa com o valor do QR Code
   }
-    @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Recupera o valor do QR Code passado como argumento
-    final qrData = ModalRoute.of(context)?.settings.arguments as String?;
-    if (qrData != null) {
-      setState(() {
-        idMaquina = qrData; // Define o valor inicial
-      });
-    }
+  
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  final qrData = ModalRoute.of(context)?.settings.arguments as String?;
+  if (qrData != null && idMaquina == null) {
+    setState(() {
+      idMaquina = qrData; // Preencher o campo com o valor do QR Code
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
+        final qrData = ModalRoute.of(context)!.settings.arguments as String?;
+    print('Dados recebidos: $qrData');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pesquisar Máquinas'),
