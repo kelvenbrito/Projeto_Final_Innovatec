@@ -3,14 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_somativa/screens/requisicao_screen.dart';
 
 class PesquisaMaquinas extends StatefulWidget {
-  const PesquisaMaquinas({super.key});
+  final String? qrCodeValue; // Valor escaneado do QR Code
+
+  const PesquisaMaquinas({super.key, this.qrCodeValue});
 
   @override
   _PesquisaMaquinasState createState() => _PesquisaMaquinasState();
 }
 
 class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
-  String? idMaquina; // Variável para armazenar o ID digitado
+  String? idMaquina;
+
+  @override
+  void initState() {
+    super.initState();
+    idMaquina = widget.qrCodeValue; // Inicializa com o valor do QR Code
+  }
+    @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Recupera o valor do QR Code passado como argumento
+    final qrData = ModalRoute.of(context)?.settings.arguments as String?;
+    if (qrData != null) {
+      setState(() {
+        idMaquina = qrData; // Define o valor inicial
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +46,11 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
                 labelText: 'Digite o ID da Máquina',
                 border: OutlineInputBorder(),
               ),
+              controller: TextEditingController(
+                  text: idMaquina), // Preenche o campo com o ID do QR Code
               onChanged: (value) {
                 setState(() {
-                  idMaquina =
-                      value.trim(); // Atualiza o ID conforme o usuário digita
+                  idMaquina = value.trim();
                 });
               },
             ),
@@ -62,7 +82,6 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
                         );
                       }
 
-                      // Convertendo os documentos em uma lista
                       final maquinas = snapshot.data!.docs;
 
                       return ListView.builder(
@@ -90,8 +109,7 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => RequisicaoScreen(
-                                      userEmail:
-                                          "user123", // Exemplo de userId, substitua se necessário
+                                      userId: "user123",
                                       machineData: {
                                         'idMaquina': maquina['idMaquina'],
                                         'nomeMaquina': nomeMaquina,

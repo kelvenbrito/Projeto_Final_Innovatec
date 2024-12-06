@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_somativa/screens/maquinas_screen.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InternaScreen extends StatefulWidget {
   final User user;
+
   const InternaScreen({super.key, required this.user, required String userId});
 
   @override
@@ -39,36 +41,40 @@ class _InternaScreenState extends State<InternaScreen> {
           children: [
             // Botão para abrir o scanner de QR Code
             ElevatedButton.icon(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QRScannerScreen(
-                      onScan: (data) async {
-                        if (await canLaunch(data)) {
-                          await launch(data);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Não foi possível abrir: $data')),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                );
+               onPressed: () {
+                Navigator.pushNamed(context, '/qrcode');
               },
-              icon: const Icon(Icons.qr_code, size: 36), // Ícone maior
-              label: const Text('Escanear QR Code'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.grey, // Cor do texto
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                textStyle: const TextStyle(fontSize: 20),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-              ),
+               label: const Text("Qrcode"),
+              // onPressed: () async {
+              //   await Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => QRScannerScreen(
+              //         onScan: (data) {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (context) => PesquisaMaquinas(
+              //                 qrCodeValue: data, // Passando o valor do QR Code
+              //               ),
+              //             ),
+              //           );
+              //         },
+              //       ),
+              //     ),
+              //   );
+              // },
+              // icon: const Icon(Icons.qr_code, size: 36),
+              // label: const Text('Escanear QR Code'),
+              // style: ElevatedButton.styleFrom(
+              //   foregroundColor: Colors.black,
+              //   backgroundColor: Colors.grey,
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              //   textStyle: const TextStyle(fontSize: 20),
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(5)),
+              // ),
             ),
 
             ElevatedButton.icon(
