@@ -1,25 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../controllers/requisicao_controller.dart';
 import '../models/requisicao.dart';
 
-class UserProvider extends ChangeNotifier {
-  String? _userId;
-
-  String? get userId => _userId;
-
-  setUserId(String userId) {
-    _userId = userId;
-    notifyListeners();
-  }
-}
-
 class RequisicaoScreen extends StatefulWidget {
-  final String userEmail;
+  final String userId;
   final Map<String, dynamic> machineData;
 
-  const RequisicaoScreen({super.key, required this.userEmail,   required this.machineData,});
+  const RequisicaoScreen({super.key, required this.userId,   required this.machineData,});
 
   @override
   State<RequisicaoScreen> createState() => _RequisicaoScreenState();
@@ -49,7 +37,7 @@ void initState() {
 
 
   Future<void> _fetchRequisicoes() async {
-    await _controller.fetchList(widget.userEmail);
+    await _controller.fetchList(widget.userId);
     if (kDebugMode) {
       print('Requisições carregadas: ${_controller.list}');
     }
@@ -62,7 +50,7 @@ void initState() {
       final requisicao = Requisicao(
         id: '',
         description: _descriptionController.text,
-        userEmail: widget.userEmail,
+        userId: widget.userId,
         machineId: _machineController.text,
         nameMachine: _nameController.text,
         nomePeca: _nomePecaController.text,
@@ -165,7 +153,6 @@ void initState() {
 
   @override
   Widget build(BuildContext context) {
-     final userId = Provider.of<UserProvider>(context).userId;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Requisições'),
