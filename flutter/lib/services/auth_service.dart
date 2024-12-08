@@ -39,22 +39,5 @@ class AuthService {
     }
   }
 
-  //login google firebase
-  // Future<User?> loginGoogle() async{
-  //   try{
-  //     GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-  //     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-  //     AuthCredential credential = GoogleAuthProvider.getCredential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-  //     UserCredential userCredential = await _auth.signInWithCredential(credential);
-  //     return userCredential.user;
-  //   }catch(e){
-  //     print(e.toString());
-  //     return null;
-  //   }
-
-  // }
 
 }

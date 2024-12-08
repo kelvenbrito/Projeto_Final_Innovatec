@@ -41,53 +41,21 @@ class _InternaScreenState extends State<InternaScreen> {
           children: [
             // Botão para abrir o scanner de QR Code
             ElevatedButton.icon(
-               onPressed: () {
+              onPressed: () {
                 Navigator.pushNamed(context, '/qrcode');
               },
-               label: const Text("Qrcode"),
-              // onPressed: () async {
-              //   await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => QRScannerScreen(
-              //         onScan: (data) {
-              //           Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => PesquisaMaquinas(
-              //                 qrCodeValue: data, // Passando o valor do QR Code
-              //               ),
-              //             ),
-              //           );
-              //         },
-              //       ),
-              //     ),
-              //   );
-              // },
-              // icon: const Icon(Icons.qr_code, size: 36),
-              // label: const Text('Escanear QR Code'),
-              // style: ElevatedButton.styleFrom(
-              //   foregroundColor: Colors.black,
-              //   backgroundColor: Colors.grey,
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              //   textStyle: const TextStyle(fontSize: 20),
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(5)),
-              // ),
-            ),
-
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/requisicao');
-              },
-              label: const Text("Requisição"),
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.pushNamed(context, '/maquinas');
-              },
-              label: const Text("Maquinas"),
+              icon: const Icon(Icons.qr_code, size: 36),
+              label: const Text('Escanear QR Code'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.grey,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                textStyle: const TextStyle(fontSize: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
             ),
 
             const SizedBox(height: 20),

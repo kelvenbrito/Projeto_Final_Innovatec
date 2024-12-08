@@ -35,8 +35,12 @@ class _ScannerPageState extends State<ScannerPage> {
             controller: cameraController,
             onDetect: (barcodeCapture) {
               if (barcodeCapture.barcodes.isNotEmpty) {
-                final String qrCode = barcodeCapture.barcodes.first.rawValue ?? 'Desconhecido';
-                
+                final String qrCode =
+                    barcodeCapture.barcodes.first.rawValue ?? 'Desconhecido';
+
+                // Parar a câmera antes de navegar
+                cameraController.stop();
+
                 // Navegar para a página "Máquinas" com o QR Code como argumento
                 Navigator.pushNamed(context, '/maquinas', arguments: qrCode);
               }

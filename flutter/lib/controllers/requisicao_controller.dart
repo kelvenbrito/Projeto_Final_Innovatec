@@ -28,12 +28,12 @@ class RequisicaoController{
     }
   }
   //fetch list
-Future<List<Requisicao>> fetchList(String userId) async {
+Future<List<Requisicao>> fetchList(String  userEmail) async {
   try {
     // Busca documentos no Firestore
     final QuerySnapshot result = await _firestore
         .collection('requisicao')
-        .where('userid', isEqualTo: userId)
+         .where('userEmail', isEqualTo: userEmail)
         .get();
 
     // Log para verificar a quantidade de documentos retornados

@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Botão de Login
                 ElevatedButton(
                   onPressed: () {
-                    _acessarTodoList(); // Chama o método para acessar a lista de tarefas
+                    _acessarInterna(); // Chama o método para acessar a lista de tarefas
                   },
                   child: const Text("Login"),
                   style: ElevatedButton.styleFrom(
@@ -111,10 +111,22 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-Future<void> _acessarTodoList() async {
+  Future<void> _saveUserEmail() async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString('userEmail', _emailController.text);
+}
+
+Future<String?> _getUserEmail() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString('userEmail');
+}
+
+
+Future<void> _acessarInterna() async {
   User? user = await _loginUser(); // Tenta realizar o login do usuário
   if (user != null) {
     String userId = user.uid; // Recupera o ID do usuário logado
+    await _saveUserEmail(); // Salva o email do usuário no SharedPreferences
 
     Navigator.push(
       context,
@@ -138,5 +150,6 @@ Future<void> _acessarTodoList() async {
     _passwordController.clear(); // Limpa o campo de senha
   }
 }
+
 
 }

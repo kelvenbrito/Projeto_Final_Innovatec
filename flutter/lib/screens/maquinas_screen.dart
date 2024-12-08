@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_somativa/screens/requisicao_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PesquisaMaquinas extends StatefulWidget {
   final String? qrCodeValue; // Valor escaneado do QR Code
@@ -19,22 +20,27 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
     super.initState();
     idMaquina = widget.qrCodeValue; // Inicializa com o valor do QR Code
   }
-  
-@override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  final qrData = ModalRoute.of(context)?.settings.arguments as String?;
-  if (qrData != null && idMaquina == null) {
-    setState(() {
-      idMaquina = qrData; // Preencher o campo com o valor do QR Code
-    });
-  }
-}
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final qrData = ModalRoute.of(context)?.settings.arguments as String?;
+    if (qrData != null && idMaquina == null) {
+      setState(() {
+        idMaquina = qrData; // Preencher o campo com o valor do QR Code
+      });
+    }
+  }
+
+  // Método para pegar o email salvo no SharedPreferences
+  Future<String?> _getUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userEmail');
+  }
 
   @override
   Widget build(BuildContext context) {
-        final qrData = ModalRoute.of(context)!.settings.arguments as String?;
+    final qrData = ModalRoute.of(context)!.settings.arguments as String?;
     print('Dados recebidos: $qrData');
     return Scaffold(
       appBar: AppBar(
@@ -107,12 +113,17 @@ void didChangeDependencies() {
                                   Text('Peça: $nomePeca (ID: $idPeca)'),
                                 ],
                               ),
-                              onTap: () {
+                              onTap: () async {
+                                // Recupera o email antes de navegar
+                                String? userEmail = await _getUserEmail();
+
+                                // Navega para a próxima tela passando o userEmail
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => RequisicaoScreen(
-                                      userId: "user123",
+                                      userEmail: userEmail ??
+                                          "", // Passa o email (ou uma string vazia se não encontrado)
                                       machineData: {
                                         'idMaquina': maquina['idMaquina'],
                                         'nomeMaquina': nomeMaquina,

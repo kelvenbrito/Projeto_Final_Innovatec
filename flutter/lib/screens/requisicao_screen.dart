@@ -4,10 +4,10 @@ import '../controllers/requisicao_controller.dart';
 import '../models/requisicao.dart';
 
 class RequisicaoScreen extends StatefulWidget {
-  final String userId;
+  final String userEmail;  // Alterado para userEmail
   final Map<String, dynamic> machineData;
 
-  const RequisicaoScreen({super.key, required this.userId,   required this.machineData,});
+  const RequisicaoScreen({super.key, required this.userEmail, required this.machineData});
 
   @override
   State<RequisicaoScreen> createState() => _RequisicaoScreenState();
@@ -22,25 +22,20 @@ class _RequisicaoScreenState extends State<RequisicaoScreen> {
   final TextEditingController _qtdPecaController = TextEditingController();
 
   @override
-@override
-void initState() {
-  super.initState();
-  final machineData = widget.machineData;
-  _machineController.text = machineData['idMaquina'] ?? '';
-  _nameController.text = machineData['nomeMaquina'] ?? '';
-  _descriptionController.text = machineData['descricao'] ?? '';
-  _nomePecaController.text = machineData['nomePeca'] ?? '';
-  _qtdPecaController.text = ''; // Este campo pode ser preenchido manualmente
+  void initState() {
+    super.initState();
+    final machineData = widget.machineData;
+    _machineController.text = machineData['idMaquina'] ?? '';
+    _nameController.text = machineData['nomeMaquina'] ?? '';
+    _descriptionController.text = machineData['descricao'] ?? '';
+    _nomePecaController.text = machineData['nomePeca'] ?? '';
+    _qtdPecaController.text = '';
 
-  _fetchRequisicoes(); // Chamando após preencher os dados iniciais
-}
-
+    _fetchRequisicoes();
+  }
 
   Future<void> _fetchRequisicoes() async {
-    await _controller.fetchList(widget.userId);
-    if (kDebugMode) {
-      print('Requisições carregadas: ${_controller.list}');
-    }
+    await _controller.fetchList(widget.userEmail);  // Alterado para userEmail
     setState(() {});
   }
 
@@ -50,7 +45,7 @@ void initState() {
       final requisicao = Requisicao(
         id: '',
         description: _descriptionController.text,
-        userId: widget.userId,
+        userEmail: widget.userEmail,  // Alterado para userEmail
         machineId: _machineController.text,
         nameMachine: _nameController.text,
         nomePeca: _nomePecaController.text,
@@ -63,7 +58,7 @@ void initState() {
       _machineController.clear();
       _nameController.clear();
       _nomePecaController.clear();
-      _qtdPecaController.clear;
+      _qtdPecaController.clear();
       _fetchRequisicoes();
     }
   }
@@ -81,22 +76,21 @@ void initState() {
     _qtdPecaController.text = requisicao.qtdPeca;
 
     DropdownButton<String>(
-  value: requisicao.status,
-  items: ['em aberto', 'concluido', 'finalizado']
-      .map((status) => DropdownMenuItem(
-            value: status,
-            child: Text(status),
-          ))
-      .toList(),
-  onChanged: (value) {
-    if (value != null) {
-      setState(() {
-        requisicao.status = value;
-      });
-    }
-  },
-);
-
+      value: requisicao.status,
+      items: ['em aberto', 'concluido', 'finalizado']
+          .map((status) => DropdownMenuItem(
+                value: status,
+                child: Text(status),
+              ))
+          .toList(),
+      onChanged: (value) {
+        if (value != null) {
+          setState(() {
+            requisicao.status = value;
+          });
+        }
+      },
+    );
 
     showDialog(
       context: context,
@@ -132,34 +126,22 @@ void initState() {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Fecha o diálogo sem salvar
+                Navigator.of(context).pop();
               },
               child: const Text('Cancelar'),
             ),
             ElevatedButton(
               onPressed: () async {
-                // Atualiza o objeto requisicao com os novos valores
                 requisicao.nameMachine = _nameController.text;
                 requisicao.machineId = _machineController.text;
                 requisicao.description = _descriptionController.text;
-                requisicao.nomePeca = _nameController.text;
+                requisicao.nomePeca = _nomePecaController.text;
                 requisicao.qtdPeca = _qtdPecaController.text;
 
-                // Atualiza a requisição no backend
                 await _controller.update(requisicao);
 
-                // Limpa os controladores
-                _descriptionController.clear();
-                _machineController.clear();
-                _nameController.clear();
-                _nomePecaController.text = requisicao.nomePeca;
-                _qtdPecaController.text = requisicao.qtdPeca;
-
-                // Atualiza a lista
                 _fetchRequisicoes();
-
-              
-                Navigator.of(context).pop(); // Fecha o diálogo
+                Navigator.of(context).pop();
               },
               child: const Text('Salvar'),
             ),
@@ -210,66 +192,65 @@ void initState() {
               ],
             ),
           ),
-        Expanded(
-  child: _controller.list.isEmpty
-      ? const Center(child: Text('Nenhuma requisição encontrada.'))
-      : ListView.builder(
-          itemCount: _controller.list.length,
-          itemBuilder: (context, index) {
-            final requisicao = _controller.list[index];
-            return Card(
-              elevation: 4,
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Nome da Máquina: ${requisicao.nameMachine}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text('ID da Máquina: ${requisicao.machineId}'),
-                    const SizedBox(height: 4),
-                    Text('Nome da Peça: ${requisicao.nomePeca}'),
-                    const SizedBox(height: 4),
-                    Text('Quantidade de Peças: ${requisicao.qtdPeca}'),
-                    const SizedBox(height: 4),
-                    Text('Descrição: ${requisicao.description}'),
-                    const SizedBox(height: 4),
-                    Text('Status: ${requisicao.status}'),
-                     const SizedBox(height: 4),
-                    Text(
-                      'Data: ${requisicao.timestamp.toString()}',
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            _editRequisicaoDialog(requisicao);
-                          },
+          Expanded(
+            child: _controller.list.isEmpty
+                ? const Center(child: Text('Nenhuma requisição encontrada.'))
+                : ListView.builder(
+                    itemCount: _controller.list.length,
+                    itemBuilder: (context, index) {
+                      final requisicao = _controller.list[index];
+                      return Card(
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nome da Máquina: ${requisicao.nameMachine}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text('ID da Máquina: ${requisicao.machineId}'),
+                              const SizedBox(height: 4),
+                              Text('Nome da Peça: ${requisicao.nomePeca}'),
+                              const SizedBox(height: 4),
+                              Text('Quantidade de Peças: ${requisicao.qtdPeca}'),
+                              const SizedBox(height: 4),
+                              Text('Descrição: ${requisicao.description}'),
+                              const SizedBox(height: 4),
+                              Text('Status: ${requisicao.status}'),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Data: ${requisicao.timestamp.toString()}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () {
+                                      _editRequisicaoDialog(requisicao);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () => _deleteRequisicao(requisicao.id),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () => _deleteRequisicao(requisicao.id),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-)
-
+                      );
+                    },
+                  ),
+          ),
         ],
       ),
     );
@@ -277,12 +258,11 @@ void initState() {
 
   @override
   void dispose() {
-    _descriptionController
-        .dispose(); // Libera recursos do controlador de descrição
-    _machineController.dispose(); // Libera recursos do controlador de máquina
-    _nameController.dispose(); // Libera recursos do controlador de nome
+    _descriptionController.dispose();
+    _machineController.dispose();
+    _nameController.dispose();
     _nomePecaController.dispose();
     _qtdPecaController.dispose();
-    super.dispose(); // Chama o método dispose() da classe base
+    super.dispose();
   }
 }
