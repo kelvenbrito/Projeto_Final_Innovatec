@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QRStock'),
+        title: const Text('QRStock', style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.black,  // Cor preta no header
       ),
       body: Center(

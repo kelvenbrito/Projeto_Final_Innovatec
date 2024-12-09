@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_somativa/screens/requisicao_screen.dart';
+import 'package:flutter_somativa/services/auth_service.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PesquisaMaquinas extends StatefulWidget {
   final String? qrCodeValue; // Valor escaneado do QR Code
+  
 
   const PesquisaMaquinas({super.key, this.qrCodeValue});
 
@@ -14,6 +17,7 @@ class PesquisaMaquinas extends StatefulWidget {
 
 class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
   String? idMaquina;
+    final AuthService _service = AuthService();
 
   @override
   void initState() {
@@ -40,11 +44,23 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
 
   @override
   Widget build(BuildContext context) {
+    
     final qrData = ModalRoute.of(context)!.settings.arguments as String?;
     print('Dados recebidos: $qrData');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesquisar Máquinas'),
+        title: const Text('QRStock', style: TextStyle(color: Colors.white),),
+        
+        backgroundColor: Colors.black, // Background preto para o header
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await _service.logoutUsuario();
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -105,12 +121,12 @@ class _PesquisaMaquinasState extends State<PesquisaMaquinas> {
                             margin: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16),
                             child: ListTile(
-                              title: Text('Máquina: $nomeMaquina'),
+                              title: Text('Peça: $nomePeca (ID: $idPeca)'),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('Descrição: $descricao'),
-                                  Text('Peça: $nomePeca (ID: $idPeca)'),
+                                  Text('Máquina: $nomeMaquina'),
                                 ],
                               ),
                               onTap: () async {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_somativa/screens/maquinas_screen.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter_somativa/services/auth_service.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InternaScreen extends StatefulWidget {
   final User user;
@@ -22,7 +20,8 @@ class _InternaScreenState extends State<InternaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QRStock'),
+        title: const Text('QRStock', style: TextStyle(color: Colors.white),),
+        
         backgroundColor: Colors.black, // Background preto para o header
         actions: [
           IconButton(
@@ -72,7 +71,7 @@ class _InternaScreenState extends State<InternaScreen> {
         color: Colors.black,
         child: const Center(
           child: Text(
-            'Footer Content',
+            'INNOVATEC',
             style: TextStyle(color: Colors.white),
           ),
         ),

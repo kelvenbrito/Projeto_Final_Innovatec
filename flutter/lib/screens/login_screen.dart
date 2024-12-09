@@ -12,41 +12,46 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+
+
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthService _auth = AuthService(); // Instância do serviço de autenticação
-  final _formKey = GlobalKey<FormState>(); // Chave global para validar o formulário
-  final TextEditingController _emailController = TextEditingController(); // Controlador para o campo de email
-  final TextEditingController _passwordController = TextEditingController(); // Controlador para o campo de senha
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QRStock'),
-        backgroundColor: Colors.black, // Cor preta para o header
+        title: const Text('QRStock', style: TextStyle(color: Colors.white),),
+        
+        backgroundColor: Colors.black, // Background preto para o header
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await _auth.logoutUsuario();
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+          ),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Aumenta o padding para melhorar o layout
+        padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Form(
-            key: _formKey, // Associa a chave global ao formulário
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // Campo de Email
                 TextFormField(
-                  controller: _emailController, // Associa o controlador ao campo de email
+                  controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -56,20 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                // Campo de Senha
                 TextFormField(
-                  controller: _passwordController, // Associa o controlador ao campo de senha
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -77,21 +75,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   },
-                  obscureText: true, // Oculta o texto da senha
+                  obscureText: true,
                 ),
                 const SizedBox(height: 20),
-                // Botão de Login
                 ElevatedButton(
-                  onPressed: () {
-                    _acessarInterna(); // Chama o método para acessar a lista de tarefas
-                  },
-                  child: const Text("Login"),
+                  onPressed: _acessarInterna,
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: Colors.grey, // Cor do texto preto
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.grey,
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     textStyle: const TextStyle(fontSize: 20),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   ),
+                  child: const Text("Login"),
                 ),
               ],
             ),
@@ -101,55 +96,50 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<User?> _loginUser() async {
-    if (_formKey.currentState!.validate()) { // Valida o formulário
+ Future<User?> _loginUser() async {
+  if (_formKey.currentState!.validate()) {
+    try {
       return await _auth.loginUsuario(
-        _emailController.text,
-        _passwordController.text,
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
+    } catch (e) {
+      // Exibir mensagem de erro no SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
       );
     }
-    return null;
   }
-
-  Future<void> _saveUserEmail() async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString('userEmail', _emailController.text);
-}
-
-Future<String?> _getUserEmail() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString('userEmail');
+  return null;
 }
 
 
 Future<void> _acessarInterna() async {
-  User? user = await _loginUser(); // Tenta realizar o login do usuário
+  User? user = await _loginUser();
   if (user != null) {
-    String userId = user.uid; // Recupera o ID do usuário logado
-    await _saveUserEmail(); // Salva o email do usuário no SharedPreferences
-
+    await _saveUserEmail();
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InternaScreen(user: user, userId: userId), // Passa o ID do usuário para a próxima tela
+        builder: (context) => InternaScreen(
+          user: user,
+          userId: user.uid,
+        ),
       ),
     );
-
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Login realizado com sucesso!"), // Mostra um snackbar de sucesso
-      ),
+      const SnackBar(content: Text("Login realizado com sucesso!")),
     );
   } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Usuário ou senha inválidos"), // Mostra um snackbar de erro
-      ),
-    );
-    _emailController.clear(); // Limpa o campo de email
-    _passwordController.clear(); // Limpa o campo de senha
+    // A mensagem de erro já será exibida no método `_loginUser`.
+    _emailController.clear();
+    _passwordController.clear();
   }
 }
 
 
+  Future<void> _saveUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('userEmail', _emailController.text);
+  }
 }
