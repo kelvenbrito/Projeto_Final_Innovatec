@@ -11,13 +11,14 @@
     <!-- Cabeçalho -->
     <header th:insert="~{fragmentos/header :: header}"></header>
 
-    <!-- Botão de Sair -->
-    <main id="btn-sair">
-        <button class="btn-sair">
-            <a th:href="@{/logout}" class="link-no-style">Sair</a>
-        </button>
-    </main>
+    <main id =btn-sair>
 
+        <!-- Logout -->
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-sair">Sair</button>
+        </form>
+        
+    </main>
     <main class="main-content">
         <div class="interna-manutencao-container">
             <div class="container">
