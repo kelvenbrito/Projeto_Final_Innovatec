@@ -38,6 +38,6 @@ public class SparePartController {
             redirectAttributes.addFlashAttribute("msgType", "danger");
         }
 
-        return "redirect:/spareParts"; // Redireciona para a lista de peças
+        return "redirect:/almox"; // Redireciona para a lista de peças
     }
 }
