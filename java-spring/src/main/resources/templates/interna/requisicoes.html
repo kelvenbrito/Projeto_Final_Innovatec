@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interno Requisições</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header th:insert="~{fragmentos/header :: header}">Interno Requisições</header>
+    <main id="btn-sair">
+        <!-- Logout -->
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-sair">Sair</button>
+        </form>
+    </main>
+    <main class="main-content">
+        <div class="interna-manutencao-container">
+            <div class="container">
+                <h2>Página Interna - Requisições</h2>
+
+                <!-- Mensagem de alerta -->
+                <div th:if="${msg}" th:classappend="'alert ' + classe" style="color: green;">
+                    <span th:text="${msg}"></span>
+                </div>
+
+                <!-- Lista de Requisições com Estilo Card -->
+                <h3>Lista de Requisições</h3>
+                <div th:each="requisicao : ${requisicoes}" class="machine-card">
+                    <div class="machine-details">
+                        <div class="machine-name" th:text="'Requisição ID: ' + ${requisicao.id}"></div>
+                        <div class="machine-description" th:text="'Descrição: ' + ${requisicao.descricao}"></div>
+                        <div class="machine-status">
+                            <label for="status">Status:</label>
+                            <select th:field="*{requisicao.status}" class="status-select">
+                                <option value="Concluído" th:selected="${requisicao.status == 'Concluído'}">Concluído</option>
+                                <option value="Em andamento" th:selected="${requisicao.status == 'Em andamento'}">Em andamento</option>
+                                <option value="Cancelado" th:selected="${requisicao.status == 'Cancelado'}">Cancelado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <form th:action="@{/requisicoes/updateStatus}" method="post">
+                        <input type="hidden" th:name="id" th:value="${requisicao.id}">
+                        <button type="submit" class="btn-add">Salvar Status</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer th:insert="~{fragmentos/footer :: footer}">© 2024 - Interno Requisições</footer>
+</body>
+</html>
